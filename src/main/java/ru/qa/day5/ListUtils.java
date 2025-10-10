@@ -15,26 +15,23 @@ public final class ListUtils {
     }
 
     public static List<String> addToList (List<String> list, String value){
-//        if(list == null) {
-//            throw  new IllegalArgumentException("List can NOT be null");
-//        } in case of empty list reutrn the list
+        if(list == null) {
+            throw  new IllegalArgumentException("List can NOT be null");
+        }
         list.add(value);
        return list;
     }
 
 
     public static List<String> removeOnIndex(List<String> list, int index){
-//        if(list == null) {
-//            throw  new IllegalArgumentException("List can NOT be null");
-//        }
-//        if (list.isEmpty()){
-//            throw new IllegalArgumentException("List can NOT be empty");
-//        } in case of empty list reutrn the list
+        if(list == null) {
+            throw  new IllegalArgumentException("List can NOT be null");
+        }
         if (index < 0){
-            throw new IllegalArgumentException("Index should be more than 0");
+            throw new IndexOutOfBoundsException("Index should be more than 0");
         }
         if (index >= list.size()) {
-            throw new IllegalArgumentException("Index should be more than 0");
+            throw new IndexOutOfBoundsException(String.format("Index %d out of bounds for size %d", index, list.size());
         }
         list.remove(index);
         return list;
