@@ -31,7 +31,7 @@ public final class ListUtils {
             throw new IndexOutOfBoundsException("Index should be more than 0");
         }
         if (index >= list.size()) {
-            throw new IndexOutOfBoundsException(String.format("Index %d out of bounds for size %d", index, list.size());
+            throw new IndexOutOfBoundsException(String.format("Index %d out of bounds for size %d", index, list.size()));
         }
         list.remove(index);
         return list;
