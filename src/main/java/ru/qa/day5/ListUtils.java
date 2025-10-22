@@ -1,6 +1,7 @@
 package ru.qa.day5;
 
 import java.util.List;
+import java.util.Objects;
 
 public final class ListUtils {
 
@@ -11,7 +12,8 @@ public final class ListUtils {
         if(list == null) {
             return false;
         }
-        return list.contains(name);
+        final boolean b = list.stream().anyMatch(s-> Objects.equals(s, name));
+        return b;
     }
 
     public static List<String> addToList (List<String> list, String value){
@@ -34,6 +36,7 @@ public final class ListUtils {
             throw new IndexOutOfBoundsException(String.format("Index %d out of bounds for size %d", index, list.size()));
         }
         list.remove(index);
+
         return list;
     }
 

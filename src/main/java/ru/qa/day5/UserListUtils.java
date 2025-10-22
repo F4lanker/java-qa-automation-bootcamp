@@ -5,8 +5,7 @@ import ru.qa.day4.User;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class UserListUtils {
-    public final class UserListUtils {
+public final class UserListUtils {
         private UserListUtils() {}
 
         public static List<User> filterAdults(List<User> users) {
@@ -38,4 +37,4 @@ public class UserListUtils {
         }
     }
 
-}
+
