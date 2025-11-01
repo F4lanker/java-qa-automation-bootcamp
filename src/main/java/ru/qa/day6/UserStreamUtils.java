@@ -41,6 +41,17 @@ public final class UserStreamUtils {
             return false;
         }
         return users.stream()
-                .anyMatch(user -> user.equals(age >= user.getAge()));
+                .anyMatch(user -> user.getAge() > age);
+    }
+    //first user Name which name starts with prefix
+    public static Optional<String> findFirstByNameStartingWith(List<User> users, String prefix){
+        if (users == null || prefix == null) {
+            return Optional.empty();
+        }
+        Optional<String> prefixName = users.stream()
+                .map(User::getName)
+               .filter(name -> name != null && name.startsWith(prefix))
+               .findFirst();
+        return prefixName;
     }
 }
