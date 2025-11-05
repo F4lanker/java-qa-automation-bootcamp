@@ -70,4 +70,12 @@ public final class UserStreamUtils {
                 .min(Comparator.comparing(User::getId));
     }
 
+    // find user with maximal aqe
+    public static Optional<User> getUserWithMaxAge(List<User> users){
+        if(users == null || users.isEmpty()){
+            return Optional.empty();
+        }
+        return users.stream()
+                .max(Comparator.comparing(User::getAge));
+    }
 }
