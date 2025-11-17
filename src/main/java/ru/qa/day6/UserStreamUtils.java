@@ -14,20 +14,23 @@ public final class UserStreamUtils {
     }
 
     //return list of users with age over 18
-    public static List<User> filterAdults(List<User> users) {
-        return users.stream()
-                .filter(user -> user.getAge() >= 18).toList();
+    public static Optional<List<User>> filterAdults(List<User> users) {
+       if(users==null || users.isEmpty())
+           return Optional.empty();
+        return Optional.of(users.stream()
+                .filter(Objects::nonNull)
+                .filter(user -> user.getAge() >= 18).toList());
     }
 
     //    returns the first user from the list with email
-    public static Object findUserByEmail(List<User> users, String email) {
-        if (users == null) {
+    public static Optional<User> findUserByEmail(List<User> users, String email) {
+        if (users == null || email == null) {
             return Optional.empty();
         }
         return users.stream()
+                .filter(Objects::nonNull)
                 .filter(user -> Objects.equals(email, user.getEmail()))
-                .findFirst()
-                .map(User::getName);
+                .findFirst();
     }
 
     //    returns the list of Names
