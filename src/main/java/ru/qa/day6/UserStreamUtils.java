@@ -2,10 +2,7 @@ package ru.qa.day6;
 
 import ru.qa.day4.User;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 
 public final class UserStreamUtils {
@@ -34,13 +31,14 @@ public final class UserStreamUtils {
     }
 
     //    returns the list of Names
-    public static Optional<Object> extractNames(List<User> users) {
+    public static List<String> extractNames(List<User> users) {
         if (users == null) {
-            return Optional.empty();
+            return Collections.emptyList();
         }
-        return Optional.of(users.stream()
+        return users.stream()
+                .filter(Objects::nonNull)
                 .map(User::getName)
-                .toList());
+                .toList();
     }
 
     //    returns true, if found at least one user over inserted age
@@ -49,7 +47,8 @@ public final class UserStreamUtils {
             return false;
         }
         return users.stream()
-                .anyMatch(user -> user.getAge() > age);
+                .filter(Objects::nonNull)
+                .anyMatch(user -> user.getAge() >= age);
     }
 
     //first user Name which name starts with prefix
@@ -57,11 +56,11 @@ public final class UserStreamUtils {
         if (users == null || prefix == null) {
             return Optional.empty();
         }
-        Optional<String> prefixName = users.stream()
+        return users.stream()
+                .filter(Objects::nonNull)
                 .map(User::getName)
                 .filter(name -> name != null && name.startsWith(prefix))
                 .findFirst();
-        return prefixName;
     }
 
     // find user with min ID
