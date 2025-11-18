@@ -3,21 +3,23 @@ package ru.qa.day5;
 import ru.qa.day4.User;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
-public class UserListUtils {
-    public final class UserListUtils {
+public final class UserListUtils {
         private UserListUtils() {}
 
-        public static List<User> filterAdults(List<User> users) {
-            if (users == null) return new ArrayList<>();
-            return users.stream()
+        public static Optional<List<User>> filterAdults(List<User> users) {
+            if (users == null)
+                return Optional.empty();
+            List <User> result =  users.stream()
+                    .filter(Objects::nonNull)
                     .filter(user -> user.getAge() >= 18)
-                    .collect(Collectors.toList());
+                    .toList();
+            return Optional.of(result);
         }
 
         public static User findUserByEmail(List<User> users, String email) {
-            if (users == null || email == null) return null;
+            if (users == null || email == null)
+                return null;
             return users.stream()
                     .filter(user -> email.equals(user.getEmail()))
                     .findFirst()
@@ -38,4 +40,4 @@ public class UserListUtils {
         }
     }
 
-}
+
