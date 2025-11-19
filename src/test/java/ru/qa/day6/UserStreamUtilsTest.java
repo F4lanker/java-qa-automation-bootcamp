@@ -22,13 +22,15 @@ public class UserStreamUtilsTest {
         Optional<List<User>> userList = filterAdults(USER_LIST);
         Optional<List<User>> emptyList = filterAdults(EMPTY_LIST);
         Optional<List<User>> nullList = filterAdults(NULL_USER_LIST);
+        Optional<List<User>> teenageUsers = filterAdults(TEENAGE_USER_LIST);
 
         assertAll(
-                () -> assertEquals(2, userList.get().size(), "List should consists 2 elements"),
+                () -> assertEquals(3, userList.get().size(), "List should consists 2 elements"),
                 () -> assertTrue(userList.get().contains(VALID_USER), "List should include VALID_USER"),
                 () -> assertTrue(userList.get().contains(NULL_VALUE_IN_STRING), "List should include  NULL_VALUE_IN STRING"),
                 () -> assertEquals(Optional.empty(), emptyList, "Optional.empty() returns if the list is empty"),
-                () -> assertEquals(Optional.empty(), nullList, "Optional.empty() returns if the list NULL")
+                () -> assertEquals(Optional.empty(), nullList, "Optional.empty() returns if the list NULL"),
+                () -> assertEquals(0, teenageUsers.get().size(), "List should consists 0 elemets, all user below 18")
         );
     }
 
