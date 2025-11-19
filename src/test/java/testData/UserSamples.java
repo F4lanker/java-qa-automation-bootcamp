@@ -23,6 +23,4 @@ public class UserSamples {
     public static final User NULL_USER_SAMPLE = null;
 
 
-
-
 }

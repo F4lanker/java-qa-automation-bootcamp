@@ -18,7 +18,7 @@ import static testData.UsersListsSample.*;
 public class UserStreamUtilsTest {
     @Test
     @DisplayName("test function returns user whose age is above 18")
-    void userAgeAbove18Test(){
+    void userAgeAbove18Test() {
         Optional<List<User>> userList = filterAdults(USER_LIST);
         Optional<List<User>> emptyList = filterAdults(EMPTY_LIST);
         Optional<List<User>> nullList = filterAdults(NULL_USER_LIST);
@@ -26,20 +26,21 @@ public class UserStreamUtilsTest {
         assertAll(
                 () -> assertEquals(2, userList.get().size(), "List should consists 2 elements"),
                 () -> assertTrue(userList.get().contains(VALID_USER), "List should include VALID_USER"),
-                () ->  assertTrue(userList.get().contains(NULL_VALUE_IN_STRING), "List should include  NULL_VALUE_IN STRING"),
+                () -> assertTrue(userList.get().contains(NULL_VALUE_IN_STRING), "List should include  NULL_VALUE_IN STRING"),
                 () -> assertEquals(Optional.empty(), emptyList, "Optional.empty() returns if the list is empty"),
                 () -> assertEquals(Optional.empty(), nullList, "Optional.empty() returns if the list NULL")
         );
     }
+
     @Test
     @DisplayName("test function find user by email")
-    void findUserByEmailTest(){
-        Optional<User> userListBob =  findUserByEmail(USER_LIST,"bob@test.com");
+    void findUserByEmailTest() {
+        Optional<User> userListBob = findUserByEmail(USER_LIST, "bob@test.com");
         Optional<User> emptyEmail = findUserByEmail(USER_LIST, String.valueOf(Optional.empty()));
         Optional<User> emptyList = findUserByEmail(EMPTY_LIST, "bob@test.com");
         Optional<User> emptyListEmptyEmail = findUserByEmail(EMPTY_LIST, String.valueOf(Optional.empty()));
-        Optional<User> nullList = findUserByEmail(NULL_USER_LIST,"bob@test.com");
-        Optional<User> nullListEmptyEmail = findUserByEmail(NULL_USER_LIST,"bob@test.com");
+        Optional<User> nullList = findUserByEmail(NULL_USER_LIST, "bob@test.com");
+        Optional<User> nullListEmptyEmail = findUserByEmail(NULL_USER_LIST, "bob@test.com");
         assertAll(
                 () -> assertTrue(userListBob.isPresent(), "User is present"),
                 () -> assertEquals(TEENAGE_USER, userListBob.get(), "Found user should match expected"),
@@ -51,9 +52,10 @@ public class UserStreamUtilsTest {
 
         );
     }
+
     @Test
     @DisplayName("test of func returns the list of Names")
-    void extractNamesTest(){
+    void extractNamesTest() {
         List<String> expected = USER_LIST.stream()
                 .filter(Objects::nonNull)
                 .map(User::getName)
@@ -68,12 +70,12 @@ public class UserStreamUtilsTest {
 
     @Test
     @DisplayName("test for func returns true, if found at least one user over inserted age")
-    void hasUserWithAgeOverTest(){
+    void hasUserWithAgeOverTest() {
         assertAll(
-                ()-> assertTrue(hasUserWithAgeOver(USER_LIST, 18)),
-                ()-> assertTrue(hasUserWithAgeOver(ONE_USER_18YO, 18)),
+                () -> assertTrue(hasUserWithAgeOver(USER_LIST, 18)),
+                () -> assertTrue(hasUserWithAgeOver(ONE_USER_18YO, 18)),
                 () -> assertTrue(hasUserWithAgeOver(USER_LIST, 0)),
-                () -> assertFalse(hasUserWithAgeOver(USER_LIST,24)),
+                () -> assertFalse(hasUserWithAgeOver(USER_LIST, 24)),
                 () -> assertFalse(hasUserWithAgeOver(TEENAGE_USER_LIST, 18)),
                 () -> assertFalse(hasUserWithAgeOver(EMPTY_LIST, 0)),
                 () -> assertFalse(hasUserWithAgeOver(NULL_USER_LIST, 0))
@@ -83,9 +85,9 @@ public class UserStreamUtilsTest {
 
     @Test
     @DisplayName("test of function returns the first user Name which name starts with prefix")
-    void findFirstByNameStartingWithTest(){
+    void findFirstByNameStartingWithTest() {
         assertAll(
-                ()-> assertEquals(Optional.of(TEENAGE_USER.getName()), findFirstByNameStartingWith(USER_LIST, "Bo")),
+                () -> assertEquals(Optional.of(TEENAGE_USER.getName()), findFirstByNameStartingWith(USER_LIST, "Bo")),
                 () -> assertEquals(Optional.of(SIMILAR_PREFIX_IN_NAME.getName()), findFirstByNameStartingWith(USER_LIST, "Donald")),
                 () -> assertEquals(Optional.empty(), findFirstByNameStartingWith(USER_LIST, "Zz")),
                 () -> assertEquals(Optional.empty(), findFirstByNameStartingWith(NULL_USER_LIST, "Bob")),
