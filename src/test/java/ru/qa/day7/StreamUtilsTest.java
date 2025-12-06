@@ -11,9 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static ru.qa.day7.StreamUtils.groupByAge;
 import static ru.qa.day7.StreamUtils.toUpperCase;
 import static testData.ListSamplesForTests.*;
-import static testData.UserSamples.TEENAGE_USER;
-import static testData.UserSamples.USER_WITH_EMPTY_STRINGS;
-import static testData.UsersListsSample.TEENAGE_USER_LIST;
+import static testData.UserSamples.*;
+import static testData.UsersListsSample.*;
 
 public class StreamUtilsTest {
     @Nested
@@ -66,8 +65,24 @@ public class StreamUtilsTest {
                     17, List.of(TEENAGE_USER),
                     1, List.of(USER_WITH_EMPTY_STRINGS)
             );
+            Map<Integer, List<User>> expetedSameAge = Map.of(
+                    17, List.of(TEENAGE_USER,TEENAGE_USER_TWO)
+            );
 
             assertEquals(expected, groupByAge(TEENAGE_USER_LIST));
+            assertEquals(expetedSameAge, groupByAge(TEENAGE_USER_SAME_AGE));
+        }
+
+        @DisplayName("Should return empty list if inptuted list is NULL")
+        @Test
+        void nullCase(){
+            assertEquals(Collections.emptyMap(), groupByAge(NULL_USER_LIST));
+        }
+
+        @DisplayName("Should return Empty list, When inputed User list is empty")
+        @Test
+        void emptyListCase(){
+            assertEquals(Collections.emptyMap(), groupByAge(EMPTY_LIST));
         }
     }
 }
