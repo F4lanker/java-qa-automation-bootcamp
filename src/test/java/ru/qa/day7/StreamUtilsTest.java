@@ -3,12 +3,17 @@ package ru.qa.day7;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import ru.qa.day4.User;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static ru.qa.day7.StreamUtils.groupByAge;
 import static ru.qa.day7.StreamUtils.toUpperCase;
 import static testData.ListSamplesForTests.*;
+import static testData.UserSamples.TEENAGE_USER;
+import static testData.UserSamples.USER_WITH_EMPTY_STRINGS;
+import static testData.UsersListsSample.TEENAGE_USER_LIST;
 
 public class StreamUtilsTest {
     @Nested
@@ -24,6 +29,7 @@ public class StreamUtilsTest {
         }
 
         @DisplayName("Should remove duplicates")
+        @Test
         void shouldRemoveDuplicates(){
             assertAll(
                     ()-> assertTrue(toUpperCase(REPEAT_ELEMENTS).contains("SAMPLE")),
@@ -49,4 +55,19 @@ public class StreamUtilsTest {
             assertEquals(nullAndOtherElementsActual, nullAndOtherElementsResult);
         }
 }
+    @DisplayName("Test groupByAge")
+    @Nested
+    class GroupedByAge {
+
+        @DisplayName("Should return dictionary with users gouped by Age")
+        @Test
+        void positiveCase(){
+            Map <Integer, List<User>> expected = Map.of(
+                    17, List.of(TEENAGE_USER),
+                    1, List.of(USER_WITH_EMPTY_STRINGS)
+            );
+
+            assertEquals(expected, groupByAge(TEENAGE_USER_LIST));
+        }
+    }
 }
