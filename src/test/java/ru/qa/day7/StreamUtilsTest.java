@@ -8,8 +8,7 @@ import ru.qa.day4.User;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static ru.qa.day7.StreamUtils.groupByAge;
-import static ru.qa.day7.StreamUtils.toUpperCase;
+import static ru.qa.day7.StreamUtils.*;
 import static testData.ListSamplesForTests.*;
 import static testData.UserSamples.*;
 import static testData.UsersListsSample.*;
@@ -83,6 +82,36 @@ public class StreamUtilsTest {
         @Test
         void emptyListCase(){
             assertEquals(Collections.emptyMap(), groupByAge(EMPTY_LIST));
+        }
+    }
+
+    @DisplayName("Test partitionByAdultStatus")
+    @Nested
+    class PartitionByAdultStatus{
+
+        @DisplayName("Should return Map of adults and non adults Usres")
+        @Test
+        void positiveCase(){
+            Map<Boolean, List<User>> expectedUserList = Map.of(
+                    true, List.of(VALID_USER, NULL_VALUE_IN_STRING, SIMILAR_PREFIX_IN_NAME),
+                    false, List.of(USER_WITH_EMPTY_STRINGS, TEENAGE_USER, SIMILAR_PREFIX_IN_NAME_2)
+            );
+            Map<Boolean, List<User>> expectedTeenageList = Map.of(
+                    true, Collections.emptyList(),
+                    false, List.of(TEENAGE_USER, USER_WITH_EMPTY_STRINGS)
+            );
+            assertEquals(expectedUserList, partitionByAdultStatus(USER_LIST));
+            assertEquals(expectedTeenageList, partitionByAdultStatus(TEENAGE_USER_LIST));
+
+        }
+
+        @DisplayName("Should return empty map if input is Empty or NULL")
+        @Test
+        void emptyNullTest(){
+            assertAll(
+                    ()->assertEquals(Collections.emptyMap(), partitionByAdultStatus(EMPTY_LIST)),
+                    ()-> assertEquals(Collections.emptyMap(), partitionByAdultStatus(NULL_USER_LIST))
+            );
         }
     }
 }
