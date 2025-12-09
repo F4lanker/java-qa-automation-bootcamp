@@ -114,4 +114,46 @@ public class StreamUtilsTest {
             );
         }
     }
+
+    @DisplayName("Test getAgeStatistic")
+    @Nested
+    class AgeStatistic{
+
+        @DisplayName("Should return statistic against inputed list")
+        @Test
+        void positiveCase(){
+            assertAll(
+                    ()-> assertEquals(3, getAgeStatistics(ONE_USER_18YO).getCount(), 0.001), // there are 3 users in the list
+                    ()-> assertEquals(1, getAgeStatistics(ONE_USER_18YO).getMin(), 0.001), // USER_WITH_EMPTY_STRING age = 1
+                    ()-> assertEquals(18, getAgeStatistics(ONE_USER_18YO).getMax(), 0.001), // NULL_VALUE_IN_STRINGS age = 18
+                    ()-> assertEquals(12, getAgeStatistics(ONE_USER_18YO).getAverage(), 0.001) // average age is 12 y.o = (18 + 17 + 1) / 3
+            );
+        }
+
+        @DisplayName("Should return statistics if there is only one user in the list")
+        @Test
+        void oneUserTest(){
+            List<User> input = List.of(TEENAGE_USER); //(4, "Bob", "bob@test.com", 17);
+
+            assertAll(
+                    ()-> assertEquals(1, getAgeStatistics(input).getCount(), 0.001),//there is the only one user in the list
+                    ()-> assertEquals(17, getAgeStatistics(input).getMin(), 0.001), //MIN, MAX and average  age is the same
+                    ()-> assertEquals(17, getAgeStatistics(input).getMax(), 0.001),
+                    ()-> assertEquals(17, getAgeStatistics(input).getAverage(), 0.001)
+            );
+        }
+
+        @DisplayName("Should return statistics if list is NULL or Empty")
+        @Test
+        void emptyNullTest(){
+            DoubleSummaryStatistics emptyStat = getAgeStatistics(NULL_USER_LIST);
+            DoubleSummaryStatistics nullStat = getAgeStatistics(NULL_USER_LIST);
+
+            assertAll(
+                    ()-> assertEquals(0, emptyStat.getCount()),
+                    ()-> assertTrue(Double.isNaN(emptyStat.getAverage()))
+
+            )
+        }
+    }
 }
