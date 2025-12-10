@@ -57,7 +57,7 @@ public class StreamUtils {
     @Contract("null -> !null")
     @NotNull
     public static DoubleSummaryStatistics getAgeStatistics(List<User> users) {
-        if (users == null || users.isEmpty()) {
+        if (users == null ) {
             return new DoubleSummaryStatistics();
         }
         return users.stream()

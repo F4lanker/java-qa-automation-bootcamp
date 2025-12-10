@@ -143,17 +143,28 @@ public class StreamUtilsTest {
             );
         }
 
+
         @DisplayName("Should return statistics if list is NULL or Empty")
         @Test
         void emptyNullTest(){
-            DoubleSummaryStatistics emptyStat = getAgeStatistics(NULL_USER_LIST);
+            DoubleSummaryStatistics emptyStat = getAgeStatistics(EMPTY_LIST);
             DoubleSummaryStatistics nullStat = getAgeStatistics(NULL_USER_LIST);
 
             assertAll(
                     ()-> assertEquals(0, emptyStat.getCount()),
-                    ()-> assertTrue(Double.isNaN(emptyStat.getAverage()))
+                    () -> assertEquals(0, emptyStat.getAverage(), 0.001),
+                    ()-> assertEquals(Double.POSITIVE_INFINITY, emptyStat.getMin()),
+                    () -> assertEquals(Double.NEGATIVE_INFINITY, emptyStat.getMax())
+            );
 
-            )
+            assertAll(
+                    ()-> assertEquals(0, nullStat.getCount()),
+                    () -> assertEquals(0, nullStat.getAverage(), 0.001),
+                    ()-> assertEquals(Double.POSITIVE_INFINITY, nullStat.getMin()),
+                    () -> assertEquals(Double.NEGATIVE_INFINITY, nullStat.getMax())
+            );
         }
-    }
-}
+
+            }
+        }
+
