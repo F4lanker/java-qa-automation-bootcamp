@@ -21,6 +21,8 @@ public class UsersListsSample {
     //list with user under 18
     public static final List<User> TEENAGE_USER_LIST = Collections.unmodifiableList((Arrays.asList(TEENAGE_USER, USER_WITH_EMPTY_STRINGS)));
 
+    public static final List<User> TEENAGE_USER_SAME_AGE = Collections.unmodifiableList((Arrays.asList(TEENAGE_USER, TEENAGE_USER_TWO)));
+
     //list with the only one user exactly 18 years old
     public static final List<User> ONE_USER_18YO = Collections.unmodifiableList(Arrays.asList(USER_WITH_EMPTY_STRINGS,TEENAGE_USER, NULL_VALUE_IN_STRING));
 }

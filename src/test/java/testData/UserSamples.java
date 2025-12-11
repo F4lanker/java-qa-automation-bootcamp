@@ -13,6 +13,8 @@ public class UserSamples {
     //teenager for age limits test
     public static final User TEENAGE_USER = new User(4, "Bob", "bob@test.com", 17);
 
+    public static final User TEENAGE_USER_TWO = new User(9, "Samuel", "dSam@test.com", 17);
+
     //similar prefix name 1
     public static final User SIMILAR_PREFIX_IN_NAME = new User(5, "Donald", "don@ald.com", 56);
 
