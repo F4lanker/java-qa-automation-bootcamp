@@ -24,8 +24,8 @@ public class StreamFlatPeekTest {
         @Test
         void positiveCase() {
             List<List<User>> listOfListValid = Arrays.asList(
-                    List.of(VALID_USER, SIMILAR_PREFIX_IN_NAME), // "alice@test.com",
-                    TEENAGE_USER_SAME_AGE);                          // "bob@test.com",
+                    List.of(VALID_USER, SIMILAR_PREFIX_IN_NAME), // "alice@test.com", "don@ald.com"
+                    TEENAGE_USER_SAME_AGE);                          // "bob@test.com", "dSam@test.com"
             List<String> expectd = List.of("alice@test.com", "don@ald.com",  "bob@test.com", "dSam@test.com");
 
             assertEquals(expectd, flattenUserEmails(listOfListValid));
