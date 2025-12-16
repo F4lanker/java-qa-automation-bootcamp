@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 import ru.qa.day4.User;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.qa.day8.StreamFlatPeek.flattenUserEmails;
-import static testData.UserSamples.SIMILAR_PREFIX_IN_NAME;
-import static testData.UserSamples.VALID_USER;
-import static testData.UsersListsSample.TEENAGE_USER_SAME_AGE;
+import static testData.UserSamples.*;
+import static testData.UsersListsSample.*;
 
 public class StreamFlatPeekTest {
 
@@ -23,13 +23,41 @@ public class StreamFlatPeekTest {
         @DisplayName("Should return the list of emails against in positive case")
         @Test
         void positiveCase() {
-            List<List<User>> listOfListValid = Arrays.asList(
+            List<List<User>> listOfListValid = List.of(
                     List.of(VALID_USER, SIMILAR_PREFIX_IN_NAME), // "alice@test.com", "don@ald.com"
                     TEENAGE_USER_SAME_AGE);                          // "bob@test.com", "dSam@test.com"
-            List<String> expectd = List.of("alice@test.com", "don@ald.com",  "bob@test.com", "dSam@test.com");
+            List<String> expected = List.of("alice@test.com", "don@ald.com", "bob@test.com", "dSam@test.com");
 
-            assertEquals(expectd, flattenUserEmails(listOfListValid));
-            System.out.println(flattenUserEmails(listOfListValid));
+            assertEquals(expected, flattenUserEmails(listOfListValid));
+        }
+
+        @DisplayName("Should empty list if the List of List is NULL")
+        @Test
+        void nullListOfList(){
+            assertEquals(Collections.emptyList(), flattenUserEmails(null));
+        }
+        @DisplayName("Should return list of email for the rest of list, if one of the lists is NULL")
+        @Test
+        void oneOfListisNull(){
+            List<List<User>> oneListIsNull = Arrays.asList(
+                List.of(VALID_USER, TEENAGE_USER_TWO),  //"alice@test.com", "dSam@test.com"
+                    null
+            );
+            List<String> expected = List.of("alice@test.com", "dSam@test.com");
+
+            assertEquals(expected, flattenUserEmails(oneListIsNull));
+        }
+
+        @DisplayName("Should return empty value against NULL or empty EMAIL") //"Should return list of email for the rest of list, if one of the lists is NULL"
+        @Test
+        void emailIsNullOrEmpty(){
+            List<List<User>> emailIsNullOeEmpty = List.of(
+                    ONE_USER_18YO,          //"", "bob@test.com", null
+                    TEENAGE_USER_LIST       //"bob@test.com", null
+            );
+            List<String> expected = List.of("", "bob@test.com", "bob@test.com", "");
+
+            assertEquals(expected, flattenUserEmails(emailIsNullOeEmpty));
         }
     }
 }
