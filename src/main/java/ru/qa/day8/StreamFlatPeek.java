@@ -28,6 +28,26 @@ public class StreamFlatPeek {
                         .filter(Objects::nonNull))                     //filter null in Emails
                 .toList();
     }
+// debagging method
+    public static void logProcessingSteps(@NotNull List<User> users){
+        users.stream()
+                .filter(Objects::nonNull)
+                .filter(user -> user.getName() == null)
+                .peek(user -> System.out.println("Обрабатываю: " + user.getName()))
+                .filter(user -> user.getAge() >= 18)
+                .peek(user -> System.out.println("Взрослый: " + user.getName()))
+                .toList();
+    }
+// custom collector for collecting complicated statistics
+//    @Contract(" -> !null")
+//    public static @NotNull Collector<User, ?, UserSummary> toUserSummary(){
+//        return Collector.of(
+//                UserSummary::new,                            //Supplier: initial state
+//                 (summary, user) -> summary.add(user), //Accumulator: add each user
+//                (a, b) -> a.merge(b)                   //Combiner: add each user
+//        );
 
-}
+    }
+
+
 
