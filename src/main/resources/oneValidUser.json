@@ -1,5 +1,6 @@
 {
-  "name": "Stat",
-  "age": 18,
-  "email": "stas@mail.ru"
+  "id": 1,
+  "name": "Stas",
+  "email": "stas@mail.ru",
+  "age": 18
 }

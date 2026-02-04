@@ -11,6 +11,7 @@ public final class UserListUtils {
         private UserListUtils() throws AssertionError {throw new AssertionError("Нельзя создавать пустой экземляр утилитного класса");
         }
 
+
         @Contract("null -> !null")
         public static Optional<List<User>> filterAdults(List<User> users) {
             if (users == null)
