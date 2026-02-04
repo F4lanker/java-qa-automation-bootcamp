@@ -27,11 +27,11 @@ public class JsonUtils {
         }
     }
     // Десериализация из Json файла
-    public static <T> T fromJsonFile(String jsonPath, Class<T> out) throws JsonProcessingException {
+    public static <T> T fromJsonFile(String jsonPath, Class<T> out)  {
         try {
             return mapper.readValue(new File(jsonPath), out);
         } catch (Exception e){
-            throw new RuntimeException("Ошидка дессериализации", e);
+            throw new RuntimeException("Ошибка дессериализации", e);
         }
     }
 
