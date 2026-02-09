@@ -10,7 +10,8 @@ import ru.qa.day9.util.JsonUtils;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static testData.UserSamples.*;
+import static testData.UserSamples.TEENAGE_USER;
+import static testData.UserSamples.VALID_USER;
 
 public class day9 {
     @Nested

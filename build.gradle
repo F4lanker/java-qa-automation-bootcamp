@@ -21,6 +21,9 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.0'
 
     compileOnly 'org.jetbrains:annotations:24.1.0'
+    // ✅ RestAssured (если используешь)
+    testImplementation 'io.rest-assured:rest-assured:5.4.0'
+    testImplementation 'org.hamcrest:hamcrest:2.2' // опционально, для assertThat
 }
 
  //✅ Важно: включить JUnit Platform
