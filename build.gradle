@@ -1,7 +1,11 @@
 plugins {
     id 'java'
 }
-
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17) // или 21
+    }
+}
 group = 'ru.qa'
 version = '1.0-SNAPSHOT'
 
