@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import ru.qa.constansts.HttpStatus;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -77,6 +78,13 @@ public class StatusMessageGeneratorTest {
         @DisplayName("Known codes returns correct message")
         void knownCodeReturnsCorrectStatus(int code, String name){
             assertEquals(name, HttpStatus.fromCode(code).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = {-1, 0, 1, Integer.MAX_VALUE})
+        @DisplayName("Negative tests inserted Not valid codes")
+        void negativeTestCodesOutofRange(int code){
+            assertEquals(HttpStatus.UNKNOWN.getMessage() ,HttpStatus.fromCode(code).getMessage());
         }
     }
 }
