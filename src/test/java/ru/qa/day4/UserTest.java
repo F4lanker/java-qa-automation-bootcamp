@@ -49,7 +49,7 @@ public class UserTest {
     @DisplayName("Should have readable toString")
     void shouldHaveReadableToString() {
         User user = new User(1, "Alice", "alice@test.com", 25);
-        String expected = "User{id=1, name='Alice', email='alice@test.com', age=25}";
+        String expected = "User(id=1, name=Alice, email=alice@test.com, age=25)";
         assertEquals(expected, user.toString());
     }
 }
