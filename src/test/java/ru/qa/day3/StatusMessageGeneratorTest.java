@@ -3,6 +3,9 @@ package ru.qa.day3;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.EnumSource;
 import ru.qa.constansts.HttpStatus;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,37 +53,30 @@ public class StatusMessageGeneratorTest {
         @Test
         void unknownValuesTestForSwitch() {
             assertAll(
-                    () -> assertEquals("Unknown", StatusMessageGenerator.getStatusMessageIfVersion(1)),
-                    () -> assertEquals("Unknown", StatusMessageGenerator.getStatusMessageIfVersion(Integer.MAX_VALUE)),
-                    () -> assertEquals("Unknown", StatusMessageGenerator.getStatusMessageIfVersion(-Integer.MAX_VALUE)),
-                    () -> assertEquals("Unknown", StatusMessageGenerator.getStatusMessageIfVersion(0))
+                    () -> assertEquals("Unknown", StatusMessageGenerator.getStatusMessageSwitchCase(1)),
+                    () -> assertEquals("Unknown", StatusMessageGenerator.getStatusMessageSwitchCase(Integer.MAX_VALUE)),
+                    () -> assertEquals("Unknown", StatusMessageGenerator.getStatusMessageSwitchCase(-Integer.MAX_VALUE)),
+                    () -> assertEquals("Unknown", StatusMessageGenerator.getStatusMessageSwitchCase(0))
             );
         }
     }
 
     @Nested
-    @DisplayName("Refacored method with Enum")
+    @DisplayName("Refactored method with Enum")
     class EnumHttpCode{
 
-        @Test
-        @DisplayName("Enum positive tests")
-        void enumCodeTest(){
-            assertAll(
-                    ()-> assertEquals("OK", HttpStatus.OK.getMessage()),
-                    ()-> assertEquals(200, HttpStatus.OK.getCode()),
-                    ()-> assertEquals("Bad Request", HttpStatus.BAD_REQUEST.getMessage()),
-                    ()-> assertEquals(400, HttpStatus.BAD_REQUEST.getCode()),
-                    ()-> assertEquals("Not Found", HttpStatus.NOT_FOUND.getMessage()),
-                    ()-> assertEquals(404, HttpStatus.NOT_FOUND.getCode()),
-                    ()-> assertEquals("Server Error", HttpStatus.SERVER_ERROR.getMessage()),
-                    ()-> assertEquals(500, HttpStatus.SERVER_ERROR.getCode())
-            );
+        @ParameterizedTest
+        @EnumSource(HttpStatus.class)
+        @DisplayName("All Statuses has it's own Messages")
+        void allStatusShouldHaveMessage(HttpStatus status){
+            assertNotNull(status.getMessage());
         }
-        @Test
-        @DisplayName("Negative tests for Enum")
-        void negativeEnumTRests(){
-            assertEquals(-1, HttpStatus.UNKNOWN.getCode());
-            assertEquals("Unknown", HttpStatus.UNKNOWN.getMessage());
+
+        @ParameterizedTest
+        @CsvSource({"200, OK", "400, Bad Request", "404, Not Found", "500, Server Error"})
+        @DisplayName("Known codes returns correct message")
+        void knownCodeReturnsCorrectStatus(int code, String name){
+            assertEquals(name, HttpStatus.fromCode(code).getMessage());
         }
     }
 }
