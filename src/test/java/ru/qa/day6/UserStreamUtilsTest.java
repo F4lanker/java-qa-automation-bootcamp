@@ -74,7 +74,7 @@ public class UserStreamUtilsTest {
     @DisplayName("test for func returns true, if found at least one user over inserted age")
     void hasUserWithAgeOverTest() {
         assertAll(
-                () -> assertTrue(hasUserWithAgeOver(USER_LIST, 0), "Test for list users of difrferent ages and inserted age = 0"),
+                () -> assertTrue(hasUserWithAgeOver(USER_LIST, 0), "Test for list users of different ages and inserted age = 0"),
                 () -> assertFalse(hasUserWithAgeOver(TEENAGE_USER_LIST, 18), " Testing the List with all users is below 18"),
                 () -> assertFalse(hasUserWithAgeOver(EMPTY_LIST, 0), "Test with empty list"),
                 () -> assertFalse(hasUserWithAgeOver(NULL_USER_LIST, 0), "Test for List = null")
@@ -95,5 +95,4 @@ public class UserStreamUtilsTest {
 
         );
     }
-
 }

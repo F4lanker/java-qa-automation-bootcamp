@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static testData.UserSamples.TEENAGE_USER;
 import static testData.UserSamples.VALID_USER;
 
-public class day9 {
+public class JsonUtilsTests {
     @Nested
     @DisplayName("JsonUtils FromJsonFile test by Jackson")
     class FromJson{
