@@ -15,7 +15,8 @@ public class NumberClassifier {
             double value = number.doubleValue();
             if (value > 0) return POSITIVE;
             else if (value < 0) return NEGATIVE;
+            else return ZERO;
         }
-        return ZERO;
+        return INVALID;
     }
 }
