@@ -1,6 +1,7 @@
 package ru.qa.day9;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -35,8 +36,9 @@ public class JsonUtilsTests {
         @DisplayName("Several users in the file")
         void fewUsersInJson() throws JsonProcessingException {
             String jsonPath = "src/main/resources/fewUserInFile.json";
-            String result  = JsonUtils.toJson(List.of(VALID_USER, TEENAGE_USER));
-            assertEquals(JsonUtils.fromJsonFile(jsonPath, User.class), result);
+            List<User> result = List.of(VALID_USER, TEENAGE_USER);
+            assertEquals(JsonUtils.fromJsonFileList(jsonPath, new TypeReference<List<User>>() {
+            }), result);
         }
 // Do NOT show any null values
         @Test
@@ -60,7 +62,7 @@ public class JsonUtilsTests {
                     RuntimeException.class,
                     ()-> JsonUtils.fromJsonFile(null, null)
             );
-                    assertEquals("Ошибка дессериализации", exception.getMessage());
+                    assertEquals("Deserialization failed: ", exception.getMessage());
         }
     }
 }
