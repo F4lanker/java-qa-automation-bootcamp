@@ -35,7 +35,7 @@ public class GetRequestsTest {
     }
 
     @Test
-    @DisplayName("Test of title is NOT empty")
+    @DisplayName("/todos/1 should have title")
     void bodyHasTitleTest() {
     given()
             .spec(spec)
@@ -48,7 +48,7 @@ public class GetRequestsTest {
     }
 
     @Test
-    @DisplayName("Test user list has {{size}} quantity of items")
+    @DisplayName("/users should have 10 items")
     void userSizeTest() {
         int size = 10; // jsonplaceholder returns 10 users
     given()
@@ -63,7 +63,7 @@ public class GetRequestsTest {
     }
 
     @Test
-    @DisplayName("Check the first user has the name parameter")
+    @DisplayName("/users the first user should has name field")
     void firstNameTest() {
         given()
                 .spec(spec)
@@ -72,10 +72,10 @@ public class GetRequestsTest {
                 .get("/users")
         .then()
                 .log().ifError()
-                .body("[0].name", notNullValue());
+                .body("[0]", hasKey("name")); //check that the user has Name field, null value is acceptable as well
     }
     @Test
-    @DisplayName("Check the first user has correct name")
+    @DisplayName("/users the first user name - Leanne Graham ")
     void userNameTest() {
     String expectedUserName = "Leanne Graham";
     given()
@@ -85,6 +85,6 @@ public class GetRequestsTest {
             .get("/users")
     .then()
             .log().ifError()
-            .body("name[0]", equalTo(expectedUserName));
+            .body("[0].name", equalTo(expectedUserName));
     }
 }
