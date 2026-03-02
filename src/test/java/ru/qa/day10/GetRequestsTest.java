@@ -1,5 +1,8 @@
 package ru.qa.day10;
 
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.specification.RequestSpecification;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,18 +12,22 @@ import static ru.qa.day10.ApiConfig.BASE_URL;
 
 public class GetRequestsTest {
 
+    private RequestSpecification spec;
+    @BeforeEach
+    void setUp() {
+        spec = new RequestSpecBuilder()
+                .setBaseUri(BASE_URL)
+                .build();
+    }
+
     @Test
-    @DisplayName("HTTP status code: 200")
-    public void successStatusTest() {
-        String path = "todos";
-        int param = 1;
+    @DisplayName("GET /todos/1 - should return status 200")
+    void successStatusTest() {
     given()
-            .baseUri(BASE_URL)
-            .log().all()
-            .pathParam("param", param)
-            .pathParam("path", path)
+            .spec(spec)
+            .log().ifValidationFails()
     .when()
-            .get("/{path}/{param}")
+            .get("/todos/1")
     .then()
             .log().ifError()
             .statusCode(200);
@@ -30,15 +37,11 @@ public class GetRequestsTest {
     @Test
     @DisplayName("Test of title is NOT empty")
     void bodyHasTitleTest() {
-    String path = "todos";
-    int param = 1;
     given()
-            .baseUri(BASE_URL)
-            .pathParam("param", param)
-            .pathParam("path", path)
-            .log().all()
+            .spec(spec)
+            .log().ifValidationFails()
     .when()
-            .get("/{path}/{param}")
+            .get("/todos/1")
     .then()
             .log().ifError()
             .body("title", not(emptyString()));
@@ -47,14 +50,12 @@ public class GetRequestsTest {
     @Test
     @DisplayName("Test user list has {{size}} quantity of items")
     void userSizeTest() {
-    String path = "users";
-    int size = 10;
+        int size = 10; // jsonplaceholder returns 10 users
     given()
-            .baseUri(BASE_URL)
-            .pathParam("path", path)
-            .log().all()
+            .spec(spec)
+            .log().ifValidationFails()
     .when()
-            .get("/{path}")
+            .get("/users")
      .then()
             .log().ifError()
             .statusCode(200)
@@ -62,32 +63,26 @@ public class GetRequestsTest {
     }
 
     @Test
-    @DisplayName("Check the first user has the name")
+    @DisplayName("Check the first user has the name parameter")
     void firstNameTest() {
-        String path = "users";
-        int userId = 0;
         given()
-                .baseUri(BASE_URL)
-                .pathParam("path", path)
-                .log().all()
+                .spec(spec)
+                .log().ifValidationFails()
         .when()
-                .get("/{path}")
+                .get("/users")
         .then()
                 .log().ifError()
-                .body("name[0].size()", greaterThanOrEqualTo(userId));
+                .body("[0].name", notNullValue());
     }
     @Test
     @DisplayName("Check the first user has correct name")
     void userNameTest() {
-    String path = "users";
-    int userId = 1;
     String expectedUserName = "Leanne Graham";
     given()
-            .baseUri(BASE_URL)
-            .pathParam("path", path)
-            .log().all()
+            .spec(spec)
+            .log().ifValidationFails()
     .when()
-            .get("/{path}")
+            .get("/users")
     .then()
             .log().ifError()
             .body("name[0]", equalTo(expectedUserName));
