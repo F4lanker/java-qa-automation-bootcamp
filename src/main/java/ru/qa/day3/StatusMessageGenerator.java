@@ -15,7 +15,7 @@ public class StatusMessageGenerator {
             case 404 -> "Not Found";
             case 400 -> "Bad Request";
             case 500 -> "Server Error";
-            default -> "Unknonwn";
+            default -> "Unknown";
         };
     }
 

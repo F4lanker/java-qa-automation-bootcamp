@@ -2,7 +2,7 @@ package ru.qa.day5;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.qa.utils.measureTime;
+import ru.qa.utils.MeasureTime;
 
 
 import java.util.ArrayList;
@@ -18,13 +18,13 @@ public class PerformanceComparisonTest {
         List<Integer> arrayList = new ArrayList<>();
         List<Integer> linkedList = new LinkedList<>();
 
-        long arrayListTime = measureTime.measureTime(() -> {
+        long arrayListTime = MeasureTime.measureTime(() -> {
             for (int i = 0; i < 10_000; i++) { // меньше, чтобы не зависало
                 arrayList.add(0, i); // в начало
             }
         });
 
-        long linkedListTime = measureTime.measureTime(() -> {
+        long linkedListTime = MeasureTime.measureTime(() -> {
             for (int i = 0; i < 10_000; i++) {
                 linkedList.add(0, i);
             }

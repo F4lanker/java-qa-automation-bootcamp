@@ -69,13 +69,5 @@ public class StreamFlatPeekTest {
                 new User(2, "Bob", "b@test.com", 30),
                 new User(3, "Charlie", "c@test.com", 18)
         );
-
-//        UserSummary summary = users.stream()
-//                .collect(StreamUtils.toUserSummary());
-//
-//        assertEquals(3, summary.getCount());
-//        assertEquals(18, summary.getMinAge());
-//        assertEquals(30, summary.getMaxAge());
-//        assertEquals(24.33, summary.getAverageAge(), 0.01);
     }
 }

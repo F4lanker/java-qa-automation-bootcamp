@@ -1,4 +1,4 @@
-package ru.qa.day3;
+package ru.qa.constansts;
 
 public enum UserRole {
     ADMIN, USER, GUEST
