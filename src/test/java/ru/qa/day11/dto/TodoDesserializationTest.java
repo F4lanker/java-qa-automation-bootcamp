@@ -7,8 +7,9 @@ import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.qa.day4.User;
+import ru.qa.dto.User;
 import ru.qa.day9.util.JsonUtils;
+import ru.qa.dto.Todo;
 
 import java.util.List;
 
@@ -80,5 +81,20 @@ public class TodoDesserializationTest {
 
         assertTrue(json.contains("\"name\""));
         assertNotNull(response.getName());
+    }
+
+    @Test
+    @DisplayName("GET user/1 city is not empty")
+    void userCityNoEmpty() {
+        User response = given()
+                .spec(spec)
+                .log().ifValidationFails()
+                .when()
+                .get("/users/1")
+                .then()
+                .log().ifValidationFails()
+                .extract().body().as(User.class);
+        assertNotNull(response.getAddress().getCity());
+        assertEquals("Gwenborough", response.getAddress().getCity());
     }
 }

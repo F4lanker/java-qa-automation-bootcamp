@@ -1,4 +1,4 @@
-package ru.qa.day11.dto;
+package ru.qa.dto;
 
 
 import lombok.Data;
