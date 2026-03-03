@@ -3,10 +3,12 @@ package ru.qa.day11.dto;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.common.mapper.TypeRef;
 import io.restassured.specification.RequestSpecification;
-import org.junit.jupiter.api.Assertions;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.qa.day4.User;
+import ru.qa.day9.util.JsonUtils;
 
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class TodoDesserializationTest {
     }
 
     @Test
-    @DisplayName("/todos/1 - Should return POJO as response")
+    @DisplayName("GET /todos/1 - Should return POJO as response")
     void deserializeTodo() {
         Todo response = given()
                 .spec(spec)
@@ -35,7 +37,7 @@ public class TodoDesserializationTest {
                 .then()
                 .log().ifValidationFails()
                 .extract().body().as(Todo.class);
-        Assertions.assertAll(
+        assertAll(
                 () -> assertEquals(1, response.getId()),
                 () -> assertNotNull(response.getUserId()),
                 () -> assertFalse(response.isCompleted())
@@ -44,7 +46,7 @@ public class TodoDesserializationTest {
     }
 
     @Test
-    @DisplayName("/todos - Should return the list Todos")
+    @DisplayName("GET /todos - Should return the list Todos")
     void deserializeTodosList() {
         List<Todo> response = given()
                 .spec(spec)
@@ -53,11 +55,30 @@ public class TodoDesserializationTest {
                 .get("/todos")
                 .then()
                 .log().ifValidationFails()
-                .extract().body().as(new TypeRef<List<Todo>>() {});
-        Assertions.assertAll(
-                ()-> assertFalse(response.isEmpty()),
-                ()-> assertNotNull(response.get(0)),
-                ()-> assertEquals(response.get(0).getId(), 1)
+                .extract().body().as(new TypeRef<List<Todo>>() {
+                });
+        assertAll(
+                () -> assertFalse(response.isEmpty()),
+                () -> assertNotNull(response.get(0)),
+                () -> assertEquals(1, response.get(0).getId())
                             );
+    }
+    @Test
+    @DisplayName("GET user/1 serialized back from POJO should consist field 'name'")
+    @SneakyThrows
+    void jsonConsistFieldName() {
+        User response = given()
+                .spec(spec)
+                .log().ifValidationFails()
+                .when()
+                .get("/users/1")
+                .then()
+                .log().ifValidationFails()
+                .extract().body().as(User.class);
+
+        String json = JsonUtils.toPrettyJson(response);
+
+        assertTrue(json.contains("\"name\""));
+        assertNotNull(response.getName());
     }
 }
