@@ -6,7 +6,7 @@ import ru.qa.constansts.UserRole;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class UserRoleTest {
+public class UserDtoRoleTest {
 
     @Test
     void shouldReturnAccessLvlCode(){

@@ -15,7 +15,7 @@ import static testData.UserSamples.*;
 import static testData.UsersListsSample.*;
 
 
-public class UserStreamUtilsTest {
+public class UserDtoStreamUtilsTest {
     @Test
     @DisplayName("test function returns user whose age is above 18")
     void userAgeAbove18Test() {
