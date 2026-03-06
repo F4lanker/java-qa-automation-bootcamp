@@ -8,8 +8,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.qa.dto.CreatePostRequest;
 import ru.qa.dto.PostResponse;
+import ru.qa.dto.UpdatePostRequest;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.*;
 import static ru.qa.day10.ApiConfig.BASE_URL;
 
 public class PostPutDeleteTest {
@@ -20,6 +22,7 @@ public class PostPutDeleteTest {
     public void setUp() {
         spec = new RequestSpecBuilder()
                 .setBaseUri(BASE_URL)
+                .setContentType(ContentType.JSON)
                 .build();
     }
 
@@ -31,7 +34,6 @@ public class PostPutDeleteTest {
                                                      .body("First post body")
                                                      .userId(1)
                                                      .build();
-        RequestSpecification spec;
         PostResponse postResponse = given()
                 .spec(spec)
                 .contentType(ContentType.JSON)
@@ -41,5 +43,34 @@ public class PostPutDeleteTest {
                 .then()
                 .statusCode(201)
                 .extract().as(PostResponse.class);
+        assertNotNull(postResponse.getBody());
+        assertNotNull(postResponse.getTitle());
+        assertTrue(postResponse.getUserId() > 0);
+        assertEquals("First post", postResponse.getTitle());
+        assertTrue(postResponse.getId() > 0);
+    }
+
+    @Test
+    @DisplayName("PUT /posts/1 should update post and return 200")
+    void shouldUpdateExistingPost(){
+        UpdatePostRequest request = UpdatePostRequest.builder()
+                .id(1)
+                .title("Up-Title")
+                .body("Update context")
+                .userId(1)
+                .build();
+        PostResponse response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .body(request)
+                .when()
+                .put("/posts/1")
+                .then()
+                .statusCode(200)
+                .extract().as(PostResponse.class);
+
+        assertEquals("Up-Title", response.getTitle());
+        assertEquals("Update context", response.getBody());
+        assertEquals(1, response.getUserId());
     }
 }
