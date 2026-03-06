@@ -36,11 +36,11 @@ public class PostPutDeleteTest {
                                                      .build();
         PostResponse postResponse = given()
                 .spec(spec)
-                .contentType(ContentType.JSON)
                 .body(request)
                 .when()
                 .post("/posts")
                 .then()
+                .log().ifError()
                 .statusCode(201)
                 .extract().as(PostResponse.class);
         assertNotNull(postResponse.getBody());
@@ -61,16 +61,43 @@ public class PostPutDeleteTest {
                 .build();
         PostResponse response = given()
                 .spec(spec)
-                .contentType(ContentType.JSON)
                 .body(request)
                 .when()
                 .put("/posts/1")
                 .then()
+                .log().ifError()
                 .statusCode(200)
                 .extract().as(PostResponse.class);
 
         assertEquals("Up-Title", response.getTitle());
         assertEquals("Update context", response.getBody());
         assertEquals(1, response.getUserId());
+    }
+
+    @Test
+    @DisplayName("DELETE /posts/1 should return code 200")
+    void shouldDeleteExistingPost(){
+        given()
+                .spec(spec)
+                .when()
+                .delete("/posts/1")
+                .then()
+                .log().ifError()
+                .statusCode(200)
+                .extract().as(PostResponse.class);
+    }
+
+    @Test
+    @DisplayName("DELETE /posts/9999 should handle non-existent resource")
+    void shouldDeleteNonExistentPost(){
+        int statusCode  = given()
+                .spec(spec)
+                .when()
+                .delete("/posts/9999")
+                .then()
+                .log().ifError()
+                .extract().statusCode();
+        //jsonplaceholder as fakeAPI for learning returns 200 instead of 404
+        assertTrue(statusCode == 404 || statusCode == 200);
     }
 }
