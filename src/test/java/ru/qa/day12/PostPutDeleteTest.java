@@ -11,6 +11,7 @@ import ru.qa.dto.PostResponse;
 import ru.qa.dto.UpdatePostRequest;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 import static ru.qa.day10.ApiConfig.BASE_URL;
 
@@ -62,6 +63,7 @@ public class PostPutDeleteTest {
         PostResponse response = given()
                 .spec(spec)
                 .body(request)
+                .log().body()
                 .when()
                 .put("/posts/1")
                 .then()
@@ -84,7 +86,7 @@ public class PostPutDeleteTest {
                 .then()
                 .log().ifError()
                 .statusCode(200)
-                .extract().as(PostResponse.class);
+                .body("isEmpty()", is(true));
     }
 
     @Test
@@ -99,5 +101,28 @@ public class PostPutDeleteTest {
                 .extract().statusCode();
         //jsonplaceholder as fakeAPI for learning returns 200 instead of 404
         assertTrue(statusCode == 404 || statusCode == 200);
+    }
+
+    @Test
+    @DisplayName("POST /posts with empty title should fail validation")
+    void shouldFailPostWithEmptyTitle(){
+        CreatePostRequest request = CreatePostRequest.builder()
+                .title("")
+                .body("Content")
+                .userId(1)
+                .build();
+
+        int statusCode = given()
+                .spec(spec)
+                .body(request)
+                .log().body() //log request body
+                .when()
+                .post("/posts")
+                .then()
+                .log().ifError()
+                .extract ().statusCode();
+// response 201 as host is fake API. real project returns 4xx code
+// In real project, change to: assertNotEquals(201, statusCode)
+        assertEquals(201, statusCode);
     }
 }
