@@ -1,35 +1,27 @@
 package ru.qa.day10;
 
-import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.qa.base.BaseApiTest;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
-import static ru.qa.day10.ApiConfig.BASE_URL;
 
-public class GetRequestsTest {
+public class GetRequestsTest extends BaseApiTest {
 
     private RequestSpecification spec;
-    @BeforeEach
-    void setUp() {
-        spec = new RequestSpecBuilder()
-                .setBaseUri(BASE_URL)
-                .build();
-    }
 
     @Test
     @DisplayName("GET /todos/1 - should return status 200")
     void successStatusTest() {
     given()
-            .spec(spec)
+            .spec(requestSpec)
             .log().ifValidationFails()
     .when()
             .get("/todos/1")
     .then()
-            .log().ifError()
+            .spec(responseSpec)
             .statusCode(200);
 
     }
@@ -38,12 +30,12 @@ public class GetRequestsTest {
     @DisplayName("/todos/1 should have title")
     void bodyHasTitleTest() {
     given()
-            .spec(spec)
+            .spec(requestSpec)
             .log().ifValidationFails()
     .when()
             .get("/todos/1")
     .then()
-            .log().ifError()
+            .spec(responseSpec)
             .body("title", not(emptyString()));
     }
 
@@ -52,12 +44,12 @@ public class GetRequestsTest {
     void userSizeTest() {
         int size = 10; // jsonplaceholder returns 10 users
     given()
-            .spec(spec)
+            .spec(requestSpec)
             .log().ifValidationFails()
     .when()
             .get("/users")
      .then()
-            .log().ifError()
+            .spec(responseSpec)
             .statusCode(200)
             .body("", hasSize(size));
     }
@@ -71,7 +63,7 @@ public class GetRequestsTest {
         .when()
                 .get("/users")
         .then()
-                .log().ifError()
+                .spec(responseSpec)
                 .body("[0]", hasKey("name")); //check that the user has Name field, null value is acceptable as well
     }
     @Test
@@ -79,12 +71,12 @@ public class GetRequestsTest {
     void userNameTest() {
     String expectedUserName = "Leanne Graham";
     given()
-            .spec(spec)
+            .spec(requestSpec)
             .log().ifValidationFails()
     .when()
             .get("/users")
     .then()
-            .log().ifError()
+            .spec(responseSpec)
             .body("[0].name", equalTo(expectedUserName));
     }
 }
