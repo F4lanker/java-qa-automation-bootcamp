@@ -26,8 +26,10 @@ public abstract class BaseApiTest {
         requestSpec = new RequestSpecBuilder()
                 .setBaseUri(BASE_URL)
                 .setContentType(ContentType.JSON)
+                .addHeader("X-Test-Source", "RestAssured-Bootcamp")
                 .log(LogDetail.METHOD)
                 .log(LogDetail.URI)
+                .log(LogDetail.HEADERS)
                 .build();
 
         responseSpec = new ResponseSpecBuilder()
