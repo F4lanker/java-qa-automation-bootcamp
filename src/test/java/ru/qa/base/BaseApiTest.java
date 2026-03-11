@@ -8,6 +8,7 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.junit.jupiter.api.BeforeEach;
 
+import static org.hamcrest.Matchers.lessThan;
 import static ru.qa.day10.ApiConfig.BASE_URL;
 
 /**
@@ -31,6 +32,7 @@ public abstract class BaseApiTest {
 
         responseSpec = new ResponseSpecBuilder()
                 .expectContentType(ContentType.JSON)
+                .expectResponseTime(lessThan(2000L)) //all responses < 2 seconds
                 .log(LogDetail.STATUS)
                 .build();
     }

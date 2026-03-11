@@ -2,6 +2,8 @@ package ru.qa.day12;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import ru.qa.base.BaseApiTest;
 import ru.qa.dto.CreatePostRequest;
 import ru.qa.dto.PostResponse;
@@ -112,5 +114,34 @@ public class PostPutDeleteTest extends BaseApiTest {
 // response 201 as host is fake API. real project returns 4xx code
 // In real project, change to: assertNotEquals(201, statusCode)
         assertEquals(201, statusCode);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "First post, First body, 1",
+            "Second post, Second body, 2",
+            "Test title, Test content, 3"
+    })
+    @DisplayName("POST /posts should create posts with different data")
+    void shouldCreatePostWithDifferentData(String title, String body, int userId){
+        CreatePostRequest request = CreatePostRequest.builder()
+                .title(title)
+                .body(body)
+                .userId(userId)
+                .build();
+
+        PostResponse response = given()
+                .spec(requestSpec)
+                .body(request)
+                .when()
+                .post("/posts")
+                .then()
+                .spec(responseSpec)
+                .extract().as(PostResponse.class);
+
+        assertEquals(title, response.getTitle());
+        assertEquals(body, response.getBody());
+        assertEquals(userId, response.getUserId());
+        assertEquals(title, response.getTitle());
     }
 }
