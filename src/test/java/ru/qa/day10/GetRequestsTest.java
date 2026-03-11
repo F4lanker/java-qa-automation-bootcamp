@@ -1,6 +1,5 @@
 package ru.qa.day10;
 
-import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GetRequestsTest extends BaseApiTest {
 
-    private RequestSpecification spec;
 
     @Test
     @DisplayName("GET /todos/1 - should return status 200")
@@ -67,8 +65,7 @@ public class GetRequestsTest extends BaseApiTest {
                 .get("/users")
         .then()
                 .spec(responseSpec)
-                .body("[0]", hasKey("name")); //check that the user has Name field, null value is acceptable as well
-    }
+                .body("[0]", hasKey("name")); // Checks field presence (null value is valid)
     @Test
     @DisplayName("/users the first user name - Leanne Graham ")
     void    userNameTest() {

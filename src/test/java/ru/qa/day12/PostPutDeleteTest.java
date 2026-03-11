@@ -15,8 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PostPutDeleteTest extends BaseApiTest {
 
-
-
     @Test
     @DisplayName("POST /posts should create a new post and response 201")
     void createPost() {
@@ -53,7 +51,6 @@ public class PostPutDeleteTest extends BaseApiTest {
         PostResponse response = given()
                 .spec(requestSpec)
                 .body(request)
-                .log().body()
                 .when()
                 .put("/posts/1")
                 .then()
@@ -105,7 +102,6 @@ public class PostPutDeleteTest extends BaseApiTest {
         int statusCode = given()
                 .spec(requestSpec)
                 .body(request)
-                .log().body() //log request body
                 .when()
                 .post("/posts")
                 .then()
@@ -142,6 +138,5 @@ public class PostPutDeleteTest extends BaseApiTest {
         assertEquals(title, response.getTitle());
         assertEquals(body, response.getBody());
         assertEquals(userId, response.getUserId());
-        assertEquals(title, response.getTitle());
     }
 }
