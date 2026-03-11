@@ -1,0 +1,43 @@
+package ru.qa.base;
+
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.filter.log.LogDetail;
+import io.restassured.http.ContentType;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
+import org.junit.jupiter.api.BeforeEach;
+
+import static org.hamcrest.Matchers.lessThan;
+import static ru.qa.day10.ApiConfig.BASE_URL;
+
+/**
+ * Base class for all API test
+ * Provides common ReaquesSpecification and ResponseSpecification
+ */
+
+public abstract class BaseApiTest {
+
+    protected RequestSpecification requestSpec;
+    protected ResponseSpecification responseSpec;
+
+    @BeforeEach
+    public void setup() {
+        requestSpec = new RequestSpecBuilder()
+                .setBaseUri(BASE_URL)
+                .setContentType(ContentType.JSON)
+                .addHeader("X-Test-Source", "RestAssured-Bootcamp")
+                .log(LogDetail.METHOD)
+                .log(LogDetail.URI)
+                .log(LogDetail.HEADERS)
+                .build();
+
+        responseSpec = new ResponseSpecBuilder()
+                .expectContentType(ContentType.JSON)
+                .expectResponseTime(lessThan(2000L)) //all responses < 2 seconds
+                .log(LogDetail.STATUS)
+                .build();
+    }
+
+
+}

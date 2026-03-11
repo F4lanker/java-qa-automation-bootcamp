@@ -1,35 +1,29 @@
 package ru.qa.day10;
 
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.specification.RequestSpecification;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import ru.qa.base.BaseApiTest;
+import ru.qa.dto.TodoDto;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
-import static ru.qa.day10.ApiConfig.BASE_URL;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class GetRequestsTest {
+public class GetRequestsTest extends BaseApiTest {
 
-    private RequestSpecification spec;
-    @BeforeEach
-    void setUp() {
-        spec = new RequestSpecBuilder()
-                .setBaseUri(BASE_URL)
-                .build();
-    }
 
     @Test
     @DisplayName("GET /todos/1 - should return status 200")
     void successStatusTest() {
     given()
-            .spec(spec)
+            .spec(requestSpec)
             .log().ifValidationFails()
     .when()
             .get("/todos/1")
     .then()
-            .log().ifError()
+            .spec(responseSpec)
             .statusCode(200);
 
     }
@@ -38,12 +32,12 @@ public class GetRequestsTest {
     @DisplayName("/todos/1 should have title")
     void bodyHasTitleTest() {
     given()
-            .spec(spec)
+            .spec(requestSpec)
             .log().ifValidationFails()
     .when()
             .get("/todos/1")
     .then()
-            .log().ifError()
+            .spec(responseSpec)
             .body("title", not(emptyString()));
     }
 
@@ -52,12 +46,12 @@ public class GetRequestsTest {
     void userSizeTest() {
         int size = 10; // jsonplaceholder returns 10 users
     given()
-            .spec(spec)
+            .spec(requestSpec)
             .log().ifValidationFails()
     .when()
             .get("/users")
      .then()
-            .log().ifError()
+            .spec(responseSpec)
             .statusCode(200)
             .body("", hasSize(size));
     }
@@ -66,25 +60,41 @@ public class GetRequestsTest {
     @DisplayName("/users the first user should has name field")
     void firstNameTest() {
         given()
-                .spec(spec)
-                .log().ifValidationFails()
-        .when()
+                .spec(requestSpec)
+                .when()
                 .get("/users")
-        .then()
-                .log().ifError()
-                .body("[0]", hasKey("name")); //check that the user has Name field, null value is acceptable as well
+                .then()
+                .spec(responseSpec)
+                .body("[0]", hasKey("name"));// Checks field presence (null value is valid)
     }
     @Test
     @DisplayName("/users the first user name - Leanne Graham ")
     void userNameTest() {
     String expectedUserName = "Leanne Graham";
     given()
-            .spec(spec)
+            .spec(requestSpec)
             .log().ifValidationFails()
     .when()
             .get("/users")
     .then()
-            .log().ifError()
+            .spec(responseSpec)
             .body("[0].name", equalTo(expectedUserName));
+    }
+
+    @ParameterizedTest()
+    @ValueSource(ints= {1,2,3,5,10})
+    @DisplayName("GET/ todos{id} should return 200 for valid IDs")
+    void shouldReturnTodoForValidIds(int todoId) {
+        TodoDto todoDto = given()
+                .spec(requestSpec)
+                .pathParam("id", todoId)
+                .when()
+                .get("/todos/{id}")
+                .then()
+                .spec(responseSpec)
+                .statusCode(200)
+                .extract().body().as(TodoDto.class);
+
+        assertEquals(todoId, todoDto.getId());
     }
 }
