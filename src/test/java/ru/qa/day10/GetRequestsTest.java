@@ -61,14 +61,15 @@ public class GetRequestsTest extends BaseApiTest {
     void firstNameTest() {
         given()
                 .spec(requestSpec)
-        .when()
+                .when()
                 .get("/users")
-        .then()
+                .then()
                 .spec(responseSpec)
-                .body("[0]", hasKey("name")); // Checks field presence (null value is valid)
+                .body("[0]", hasKey("name"));// Checks field presence (null value is valid)
+    }
     @Test
     @DisplayName("/users the first user name - Leanne Graham ")
-    void    userNameTest() {
+    void userNameTest() {
     String expectedUserName = "Leanne Graham";
     given()
             .spec(requestSpec)
