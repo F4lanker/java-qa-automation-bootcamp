@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GetRequestsTest extends BaseApiTest {
 
-
     @Test
     @DisplayName("GET /todos/1 - should return status 200")
     void successStatusTest() {
