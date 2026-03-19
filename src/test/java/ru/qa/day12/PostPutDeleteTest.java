@@ -8,12 +8,14 @@ import ru.qa.base.BaseApiTest;
 import ru.qa.dto.CreatePostRequest;
 import ru.qa.dto.PostResponse;
 import ru.qa.dto.UpdatePostRequest;
+import util.Logger;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PostPutDeleteTest extends BaseApiTest {
+public class PostPutDeleteTest extends BaseApiTest { // ✅ Наследование
+    private Logger logger = new Logger("PostPutDeleteTest"); // ✅ Композиция
 
     @Test
     @DisplayName("POST /posts should create a new post and response 201")
@@ -23,6 +25,8 @@ public class PostPutDeleteTest extends BaseApiTest {
                                                      .body("First post body")
                                                      .userId(1)
                                                      .build();
+        logger.info("Request prepared: " + request.getTitle());
+
         PostResponse postResponse = given()
                 .spec(requestSpec)
                 .body(request)
@@ -32,6 +36,9 @@ public class PostPutDeleteTest extends BaseApiTest {
                 .spec(responseSpec)
                 .statusCode(201)
                 .extract().as(PostResponse.class);
+
+        logger.info("Response received, ID: " + postResponse.getId());
+
         assertNotNull(postResponse.getBody());
         assertNotNull(postResponse.getTitle());
         assertTrue(postResponse.getUserId() > 0);
@@ -41,13 +48,13 @@ public class PostPutDeleteTest extends BaseApiTest {
 
     @Test
     @DisplayName("PUT /posts/1 should update post and return 200")
-    void shouldUpdateExistingPost(){
+    void shouldUpdateExistingPost() {
         UpdatePostRequest request = UpdatePostRequest.builder()
-                .id(1)
-                .title("Up-Title")
-                .body("Update context")
-                .userId(1)
-                .build();
+                                                     .id(1)
+                                                     .title("Up-Title")
+                                                     .body("Update context")
+                                                     .userId(1)
+                                                     .build();
         PostResponse response = given()
                 .spec(requestSpec)
                 .body(request)
@@ -65,7 +72,7 @@ public class PostPutDeleteTest extends BaseApiTest {
 
     @Test
     @DisplayName("DELETE /posts/1 should return code 200")
-    void shouldDeleteExistingPost(){
+    void shouldDeleteExistingPost() {
         given()
                 .spec(requestSpec)
                 .when()
@@ -78,8 +85,8 @@ public class PostPutDeleteTest extends BaseApiTest {
 
     @Test
     @DisplayName("DELETE /posts/9999 should handle non-existent resource")
-    void shouldDeleteNonExistentPost(){
-        int statusCode  = given()
+    void shouldDeleteNonExistentPost() {
+        int statusCode = given()
                 .spec(requestSpec)
                 .when()
                 .delete("/posts/9999")
@@ -92,12 +99,12 @@ public class PostPutDeleteTest extends BaseApiTest {
 
     @Test
     @DisplayName("POST /posts with empty title should fail validation")
-    void shouldFailPostWithEmptyTitle(){
+    void shouldFailPostWithEmptyTitle() {
         CreatePostRequest request = CreatePostRequest.builder()
-                .title("")
-                .body("Content")
-                .userId(1)
-                .build();
+                                                     .title("")
+                                                     .body("Content")
+                                                     .userId(1)
+                                                     .build();
 
         int statusCode = given()
                 .spec(requestSpec)
@@ -106,7 +113,7 @@ public class PostPutDeleteTest extends BaseApiTest {
                 .post("/posts")
                 .then()
                 .spec(responseSpec)
-                .extract ().statusCode();
+                .extract().statusCode();
 // response 201 as host is fake API. real project returns 4xx code
 // In real project, change to: assertNotEquals(201, statusCode)
         assertEquals(201, statusCode);
@@ -119,12 +126,12 @@ public class PostPutDeleteTest extends BaseApiTest {
             "Test title, Test content, 3"
     })
     @DisplayName("POST /posts should create posts with different data")
-    void shouldCreatePostWithDifferentData(String title, String body, int userId){
+    void shouldCreatePostWithDifferentData(String title, String body, int userId) {
         CreatePostRequest request = CreatePostRequest.builder()
-                .title(title)
-                .body(body)
-                .userId(userId)
-                .build();
+                                                     .title(title)
+                                                     .body(body)
+                                                     .userId(userId)
+                                                     .build();
 
         PostResponse response = given()
                 .spec(requestSpec)

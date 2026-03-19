@@ -16,13 +16,18 @@ import static ru.qa.day10.ApiConfig.BASE_URL;
  * Provides common ReaquesSpecification and ResponseSpecification
  */
 
-public abstract class BaseApiTest {
+public abstract class BaseApiTest extends BaseTest {
 
     protected RequestSpecification requestSpec;
     protected ResponseSpecification responseSpec;
 
+    @Override
     @BeforeEach
-    public void setup() {
+    public void setUpBase() {
+        super.setUpBase(); // call the parents method first
+
+        System.out.println("[BaseApiTest] API-specific setup");
+
         requestSpec = new RequestSpecBuilder()
                 .setBaseUri(BASE_URL)
                 .setContentType(ContentType.JSON)
