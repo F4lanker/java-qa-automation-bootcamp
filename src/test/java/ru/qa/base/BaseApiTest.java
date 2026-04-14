@@ -21,6 +21,15 @@ public abstract class BaseApiTest extends BaseTest {
     protected RequestSpecification requestSpec;
     protected ResponseSpecification responseSpec;
 
+    /**
+     * Returns the base path for this API test.
+     * Each test must override this to specify its endpoint.
+     *
+     * @return base path (e.g., "/users", "/posts", "/todos")
+     */
+
+    protected abstract String getBasePath();
+
     @Override
     @BeforeEach
     public void setUpBase() {

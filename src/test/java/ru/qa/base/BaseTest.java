@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
  * Provides common setup and teardown logic.
  */
 
-public class BaseTest {
+public abstract class BaseTest {
     @BeforeEach
     public void setUpBase() {
         System.out.println("[BaseTest] Common setup for all tests");

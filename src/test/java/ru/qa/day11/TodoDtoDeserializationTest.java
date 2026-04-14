@@ -93,4 +93,9 @@ public class TodoDtoDeserializationTest extends BaseApiTest {
         assertNotNull(userDto.getAddress().getGeo().getLng());
 
     }
+
+    @Override
+    protected String getBasePath() {
+        return "";
+    }
 }

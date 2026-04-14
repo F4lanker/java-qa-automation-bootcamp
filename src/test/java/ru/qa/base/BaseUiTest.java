@@ -2,7 +2,7 @@ package ru.qa.base;
 
 import org.junit.jupiter.api.BeforeEach;
 
-public class BaseUiTest extends BaseTest {
+public abstract class BaseUiTest extends BaseTest {
     @Override
     @BeforeEach
     public void setUpBase() {

@@ -8,7 +8,7 @@ import ru.qa.base.BaseApiTest;
 import ru.qa.dto.CreatePostRequest;
 import ru.qa.dto.PostResponse;
 import ru.qa.dto.UpdatePostRequest;
-import util.Logger;
+import ru.qa.util.Logger;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
@@ -16,6 +16,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PostPutDeleteTest extends BaseApiTest { // ✅ Наследование
     private Logger logger = new Logger("PostPutDeleteTest"); // ✅ Композиция
+
+    @Override
+    protected String getBasePath(){
+        return "/posts";
+    }
 
     @Test
     @DisplayName("POST /posts should create a new post and response 201")

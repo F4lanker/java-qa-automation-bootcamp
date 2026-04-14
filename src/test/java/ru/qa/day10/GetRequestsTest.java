@@ -13,6 +13,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GetRequestsTest extends BaseApiTest {
 
+    @Override
+    protected String getBasePath() {
+        return ""; // ✅ Пустая строка — используем полные пути в тестах
+    }
+
     @Test
     @DisplayName("GET /todos/1 - should return status 200")
     void successStatusTest() {
