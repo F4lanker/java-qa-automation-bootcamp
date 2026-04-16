@@ -1,4 +1,4 @@
-package client;
+package ru.qa.client;
 
 import ru.qa.dto.UserDto;
 
