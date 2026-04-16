@@ -9,7 +9,7 @@ import io.restassured.specification.ResponseSpecification;
 import org.junit.jupiter.api.BeforeEach;
 
 import static org.hamcrest.Matchers.lessThan;
-import static ru.qa.day10.ApiConfig.BASE_URL;
+import static ru.qa.config.constansts.ApiConfig.BASE_URL;
 
 /**
  * Base class for all API test

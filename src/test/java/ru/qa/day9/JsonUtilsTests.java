@@ -5,8 +5,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import ru.qa.day4.User;
-import ru.qa.day9.util.JsonUtils;
+import ru.qa.days.day4.User;
+import ru.qa.days.util.JsonUtils;
 
 import java.util.List;
 

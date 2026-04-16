@@ -8,7 +8,7 @@ import ru.qa.base.BaseApiTest;
 import ru.qa.dto.CreatePostRequest;
 import ru.qa.dto.PostResponse;
 import ru.qa.dto.UpdatePostRequest;
-import ru.qa.util.Logger;
+import ru.qa.utils.Logger;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;

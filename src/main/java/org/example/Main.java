@@ -1,8 +1,8 @@
 package org.example;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import ru.qa.day4.User;
-import ru.qa.day9.util.JsonUtils;
+import ru.qa.days.day4.User;
+import ru.qa.days.util.JsonUtils;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.

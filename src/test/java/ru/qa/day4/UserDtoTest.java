@@ -2,6 +2,8 @@ package ru.qa.day4;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.qa.days.day4.User;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserDtoTest {

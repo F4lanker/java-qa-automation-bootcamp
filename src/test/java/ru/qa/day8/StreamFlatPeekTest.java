@@ -3,14 +3,14 @@ package ru.qa.day8;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import ru.qa.day4.User;
+import ru.qa.days.day4.User;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static ru.qa.day8.StreamFlatPeek.flattenUserEmails;
+import static ru.qa.days.day8.StreamFlatPeek.flattenUserEmails;
 import static testData.UserSamples.*;
 import static testData.UsersListsSample.*;
 
