@@ -3,12 +3,12 @@ package ru.qa.day7;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import ru.qa.day4.User;
+import ru.qa.days.day4.User;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static ru.qa.day7.StreamUtils.*;
+import static ru.qa.days.day7.StreamUtils.*;
 import static testData.ListSamplesForTests.*;
 import static testData.UserSamples.*;
 import static testData.UsersListsSample.*;

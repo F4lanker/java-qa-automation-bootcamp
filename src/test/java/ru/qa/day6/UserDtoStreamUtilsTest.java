@@ -2,7 +2,7 @@ package ru.qa.day6;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.qa.day4.User;
+import ru.qa.days.day4.User;
 
 import java.util.Collections;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static ru.qa.day6.UserStreamUtils.*;
+import static ru.qa.days.day6.UserStreamUtils.*;
 import static testData.UserSamples.*;
 import static testData.UsersListsSample.*;
 

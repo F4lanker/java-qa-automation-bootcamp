@@ -5,7 +5,7 @@ import io.restassured.common.mapper.TypeRef;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.qa.base.BaseApiTest;
-import ru.qa.day9.util.JsonUtils;
+import ru.qa.days.util.JsonUtils;
 import ru.qa.dto.TodoDto;
 import ru.qa.dto.UserDto;
 
@@ -92,5 +92,10 @@ public class TodoDtoDeserializationTest extends BaseApiTest {
         assertEquals("-37.3159", userDto.getAddress().getGeo().getLat());
         assertNotNull(userDto.getAddress().getGeo().getLng());
 
+    }
+
+    @Override
+    protected String getBasePath() {
+        return "";
     }
 }

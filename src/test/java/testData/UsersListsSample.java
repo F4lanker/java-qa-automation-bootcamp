@@ -1,6 +1,6 @@
 package testData;
 
-import ru.qa.day4.User;
+import ru.qa.days.day4.User;
 
 import java.util.Arrays;
 import java.util.Collections;

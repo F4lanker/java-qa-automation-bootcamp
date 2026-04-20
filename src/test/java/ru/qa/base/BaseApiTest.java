@@ -9,20 +9,34 @@ import io.restassured.specification.ResponseSpecification;
 import org.junit.jupiter.api.BeforeEach;
 
 import static org.hamcrest.Matchers.lessThan;
-import static ru.qa.day10.ApiConfig.BASE_URL;
+import static ru.qa.config.constansts.ApiConfig.BASE_URL;
 
 /**
  * Base class for all API test
  * Provides common ReaquesSpecification and ResponseSpecification
  */
 
-public abstract class BaseApiTest {
+public abstract class BaseApiTest extends BaseTest {
 
     protected RequestSpecification requestSpec;
     protected ResponseSpecification responseSpec;
 
+    /**
+     * Returns the base path for this API test.
+     * Each test must override this to specify its endpoint.
+     *
+     * @return base path (e.g., "/users", "/posts", "/todos")
+     */
+
+    protected abstract String getBasePath();
+
+    @Override
     @BeforeEach
-    public void setup() {
+    public void setUpBase() {
+        super.setUpBase(); // call the parents method first
+
+        System.out.println("[BaseApiTest] API-specific setup");
+
         requestSpec = new RequestSpecBuilder()
                 .setBaseUri(BASE_URL)
                 .setContentType(ContentType.JSON)

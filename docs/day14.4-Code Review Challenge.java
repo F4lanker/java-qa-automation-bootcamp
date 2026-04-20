@@ -24,7 +24,7 @@ return "2025-01-01";
 public abstract class BaseApiTest {
 public RequestSpecification requestSpec;  // здесь подходит модификатор protected. Если поставим Private то доступа в классах наследниках не будет. Public - код будет работать, но будет слишком открыт, любой вне пакета может сломать.
 
-    private void setup() {             // я бы поставил тоже protected, немного колебалсф в коде который ты предлагал был public, но думаю  если переменная requestSpec с модификатором protected, но логично использовать его и здесь
+    private void setup() {             // я бы поставил тоже protected, немного колебался, в коде который ты предлагал был public, но думаю  если переменная requestSpec с модификатором protected, но логично использовать его и здесь
         requestSpec = ...;
     }
 }
