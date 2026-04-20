@@ -2,8 +2,6 @@ package ru.qa.client;
 
 import io.restassured.response.Response;
 
-import java.util.Map;
-
 /**
  * Http client enhanced logging
  */
@@ -26,7 +24,7 @@ public abstract class BaseHttpClient {
      */
 
     public Response post(String path, Object body) {
-        System.out.println("[POST}" + getEndpoints() + path)
+        System.out.println("[POST}" + getEndpoints() + path);
                return executePost(path, body) ;
     }
 
