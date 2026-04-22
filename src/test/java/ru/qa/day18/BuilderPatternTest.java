@@ -12,6 +12,7 @@ public class BuilderPatternTest extends BaseApiTest {
     @Test
     void shouldUseBuilder() {
         Response response = ApiRequestBuilder.create()
+                                             .baseUrl(BASE_URL)
                                              .endpoint(getBasePath())
                                              .queryParam("userId", 1)
                                              .queryParam("_limit", 5)
@@ -25,6 +26,6 @@ public class BuilderPatternTest extends BaseApiTest {
 
     @Override
     protected String getBasePath() {
-        return BASE_URL + "/posts";
+        return "/posts";
     }
 }

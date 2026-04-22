@@ -9,6 +9,7 @@ import static io.restassured.RestAssured.given;
 
 public class ApiRequestBuilder {
     private String endpoint;
+    private String baseUrl;
     private Map<String, Object> queryParams = new HashMap<>();
     private Map<String, String> headers = new HashMap<>();
     private boolean logRequest = false;
@@ -19,6 +20,11 @@ public class ApiRequestBuilder {
 
     public ApiRequestBuilder endpoint(String endpoint) {
         this.endpoint = endpoint;
+        return this;
+    }
+
+    public ApiRequestBuilder baseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
         return this;
     }
 
@@ -43,6 +49,7 @@ public class ApiRequestBuilder {
 
         // Включаем логирование, если нужно
         if (logRequest) request.log().all();
+        if(baseUrl != null) request.baseUri(baseUrl);
         request.headers(headers);
         request.queryParams(queryParams);
         return request.get(endpoint);
