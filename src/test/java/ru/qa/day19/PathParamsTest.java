@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import ru.qa.base.BaseApiTest;
 
 import java.util.List;
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -54,6 +55,18 @@ void shouldGetUserPosts(){
 
        assertTrue(list.stream().allMatch(id -> id == userId), "All posts should have expected ID");
 }
+    @DisplayName("GET: path param from Map response code - 200")
+    @Test
+    void shouldGetUserPostsFromMap(){
+       Map<String, Object> map = Map.of("userId", 1);
+       given()
+       .spec(requestSpec)
+       .pathParams(map)
+       .when()
+       .get("/users/{userId}/posts")
+       .then()
+               .statusCode(200);
+    }
 
 @Override
     protected String getBasePath() {
