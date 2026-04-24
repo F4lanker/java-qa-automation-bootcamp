@@ -29,7 +29,7 @@ public class PojoDeserializationTest extends BaseApiTest {
         assertNotNull(posts.getTitle());
     }
 
-    @DisplayName("GET /posts?_limit=5 - list size is X, and all element is samples of PostDto.class")
+    @DisplayName("GET /posts?_limit=[limit] - list size is X, and all element is samples of PostDto.class")
     @Test
     void shouldDeserializeListOfPosts() {
         int limit = 5;
@@ -45,6 +45,25 @@ public class PojoDeserializationTest extends BaseApiTest {
         assertEquals(limit, posts.size());
         assertTrue(posts.stream()
                         .allMatch(x -> x.getClass().equals(PostDto.class)), "All element is samples of PostDto.class");
+    }
+
+    @Test
+    @DisplayName("GET /posts/[id] - validates all fields via deserialization")
+    public void shouldValidateAllFields() {
+        int id = 1;
+PostDto posts = given()
+        .spec(requestSpec)
+        .when()
+        .get(getBasePath() + "/" + id)
+        .then()
+        .extract().as(PostDto.class);
+
+assertAll(
+        ()-> assertNotNull(posts.getId()),
+        ()->assertNotNull(posts.getUserId()),
+        ()->assertFalse(posts.getTitle().isEmpty()),
+        ()->assertFalse(posts.getBody().isEmpty())
+         );
     }
 
     @Override
