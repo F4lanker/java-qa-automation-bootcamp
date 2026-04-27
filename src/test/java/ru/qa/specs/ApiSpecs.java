@@ -11,7 +11,7 @@ import static ru.qa.base.ApiTestConfig.BASE_URL;
 
 public class ApiSpecs {
 
-    private ApiSpecs() {
+    private ApiSpecs(){
         throw new AssertionError("Utility class");
     }
 
