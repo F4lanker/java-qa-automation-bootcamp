@@ -15,7 +15,7 @@ repositories {
 
 dependencies {
     // ✅ JUnit 5 — стабильная версия (5.10.2 на февраль 2026)
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    implementation 'org.junit.jupiter:junit-jupiter:5.10.2'
 
     // ✅ Lombok
     compileOnly 'org.projectlombok:lombok:1.18.42'

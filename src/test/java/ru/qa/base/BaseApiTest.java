@@ -49,6 +49,7 @@ public abstract class BaseApiTest extends BaseTest {
         responseSpec = new ResponseSpecBuilder()
                 .expectContentType(ContentType.JSON)
                 .expectResponseTime(lessThan(2000L)) //all responses < 2 seconds
+                .log(LogDetail.BODY)
                 .log(LogDetail.STATUS)
                 .build();
     }
