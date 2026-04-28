@@ -9,14 +9,17 @@ import ru.qa.specs.ApiSpecs;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
+import static ru.qa.specs.ApiSpecs.*;
+
 
 public class PostDtoAssertionsTest extends BaseApiTest {
 
     @Test
-    void shouldhaveAllfieldsValid() {
+    void shouldHaveAllFieldsValid() {
         List<PostDto> post = given()
-                .spec(ApiSpecs.loggingRequestSpec())
-                .queryParam("usedId", 1)
+                .spec(loggingRequestSpec())
+                .queryParam("userId", 1)
+                .when()
                 .get(getBasePath())
                         .then()
                         .spec(ApiSpecs.successResponseSpec())
@@ -30,8 +33,9 @@ public class PostDtoAssertionsTest extends BaseApiTest {
 
         for (int userId = 1; userId < 10; userId++) {
             List<PostDto> posts = given()
-                    .spec(ApiSpecs.loggingRequestSpec())
+                    .spec(loggingRequestSpec())
                     .queryParam("userId", userId)
+                    .when()
                     .get(getBasePath())
                     .then()
                     .spec(ApiSpecs.successResponseSpec())

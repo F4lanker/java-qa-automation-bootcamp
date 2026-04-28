@@ -2,9 +2,12 @@ package ru.qa.day20;
 
 import org.junit.jupiter.api.Test;
 import ru.qa.base.BaseApiTest;
+import ru.qa.dto.CreatePostRequest;
 import ru.qa.specs.ApiSpecs;
 
 import static io.restassured.RestAssured.given;
+import static ru.qa.specs.ApiSpecs.baseRequestSpec;
+import static ru.qa.specs.ApiSpecs.loggingRequestSpec;
 
 ;
 
@@ -13,7 +16,8 @@ public class RefactoredApiTest extends BaseApiTest {
     @Test
     void shouldUseBaseRequestSpec(){
         given()
-                .spec(ApiSpecs.baseRequestSpec()) // здесь хочется сделать так же как с  .spec(requestSpec) чтобы можно было использовать без указания класса. Как это сделать?
+                .spec(baseRequestSpec())
+                .when()
                 .get(getBasePath() + "/1")
                 .then()
                 .spec(ApiSpecs.successResponseSpec());
@@ -22,15 +26,23 @@ public class RefactoredApiTest extends BaseApiTest {
     @Test
     void shouldUseLoggingRequestSpec(){
         given()
-                .spec(ApiSpecs.loggingRequestSpec())
+                .spec(loggingRequestSpec())
                 .get(getBasePath() + "/1")
             .then()
                 .spec(ApiSpecs.successResponseSpec());
     }
 @Test
 void shouldUseCreatedResponseSpec(){
+    CreatePostRequest request = CreatePostRequest.builder()
+            .title("Test Post")
+            .body("Test Body")
+            .userId(1)
+            .build();
+
         given()
-                .spec(ApiSpecs.baseRequestSpec())
+                .spec(baseRequestSpec())
+                .body(request)
+                .when()
                 .post(getBasePath())
                 .then()
                 .spec(ApiSpecs.createdResponseSpec());
@@ -39,8 +51,9 @@ void shouldUseCreatedResponseSpec(){
 @Test
 void shouldCombineMultipleSpecs(){
         given()
-                .spec(ApiSpecs.baseRequestSpec())
+                .spec(baseRequestSpec())
                 .queryParam("userId", 1)
+                .when()
                 .get(getBasePath())
                 .then()
                 .spec(ApiSpecs.successResponseSpec());
