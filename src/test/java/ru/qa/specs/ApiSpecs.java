@@ -76,5 +76,14 @@ public class ApiSpecs {
                 .expectStatusCode(org.hamcrest.Matchers.lessThan(500))
                 .build();
     }
+
+    /**
+     * Спецификация для ошибок клиента (404).
+     */
+    public static ResponseSpecification notFoundResponseSpec() {
+        return new ResponseSpecBuilder()
+                .expectStatusCode(404)
+                .build();
+    }
 }
 
