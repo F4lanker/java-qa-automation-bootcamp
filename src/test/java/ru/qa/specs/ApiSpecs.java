@@ -18,9 +18,16 @@ public class ApiSpecs {
     /**
      * Базовая спецификация для всех запросов.
      */
+
+    // Существующий метод — без изменений:
     public static RequestSpecification baseRequestSpec() {
+        return baseRequestSpec(BASE_URL);  // ✅ Делегируем в новый метод
+    }
+
+    // Новый перегруженный метод с кастомным baseUri:
+    public static RequestSpecification baseRequestSpec(String baseUrl) {
         return new RequestSpecBuilder()
-                .setBaseUri(BASE_URL)
+                .setBaseUri(baseUrl)
                 .setContentType(ContentType.JSON)
                 .addHeader("X-Test-Source", "RestAssured-Bootcamp")
                 .build();
@@ -36,6 +43,13 @@ public class ApiSpecs {
                 .build();
     }
 
+    public static RequestSpecification loggingRequestSpec(String baseUrl) {
+        return new RequestSpecBuilder()
+                .addRequestSpecification(baseRequestSpec(baseUrl))  // ✅ Наследуем базовую
+                .log(io.restassured.filter.log.LogDetail.ALL)
+                .build();
+    }
+
     /**
      * Спецификация с авторизацией (для будущих задач).
      */
@@ -45,6 +59,8 @@ public class ApiSpecs {
                 .addHeader("Authorization", "Bearer " + token)
                 .build();
     }
+
+
 
     /**
      * Базовая спецификация для успешных ответов (2xx).
