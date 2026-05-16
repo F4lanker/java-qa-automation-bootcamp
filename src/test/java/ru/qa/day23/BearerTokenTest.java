@@ -31,7 +31,7 @@ public class BearerTokenTest {
         String password = "cityslicka";
 
         given()
-                .spec(httpBinRequestSpec())
+                .spec(httpRequestSpec())
                 .header("X-API-Key", cfg.apiKey())
                 .contentType(ContentType.JSON)
                 .body(new LoginDto(email, password))
@@ -51,7 +51,7 @@ public class BearerTokenTest {
         String password = "pass";
 
         given()
-                .spec(httpBinRequestSpec())
+                .spec(httpRequestSpec())
                 .header("X-API-Key", cfg.apiKey())
                 .contentType(ContentType.JSON)
                 .body(new LoginDto(email, password))
@@ -59,7 +59,7 @@ public class BearerTokenTest {
                 .when()
                 .post("/api/login")
                 .then()
-                .statusCode(404); //Здесь код 404, видимо по тому что это fake API
+                .statusCode(400);
 
     }
 }

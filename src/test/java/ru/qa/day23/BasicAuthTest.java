@@ -30,10 +30,10 @@ public class BasicAuthTest {
     @ParameterizedTest
     @CsvSource({"user, password", "usr, passwd", "1, 1", "user, user", " '','' "}) // here I test empty values as well
     @DisplayName("Should return 401 if credentials is not correct or empty")
-    void shouldFailWithInvalidOrEmptyCredentials(String log, String pass){
+    void shouldFailWithInvalidOrEmptyCredentials(String login, String password){
         given()
                 .spec(loggingRequestSpec("https://httpbin.org/"))
-                .auth().basic(log, pass)
+                .auth().basic(login, password)
                 .when()
                 .get("basic-auth/user/passwd")
                 .then()
