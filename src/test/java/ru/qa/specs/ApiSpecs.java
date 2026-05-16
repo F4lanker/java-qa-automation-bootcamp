@@ -8,6 +8,8 @@ import io.restassured.specification.ResponseSpecification;
 
 import static org.hamcrest.Matchers.lessThan;
 import static ru.qa.base.ApiTestConfig.BASE_URL;
+import static ru.qa.config.constansts.ApiConfig.HTTPBIN_URL;
+import static ru.qa.config.constansts.ApiConfig.REQRES_URL;
 
 public class ApiSpecs {
 
@@ -31,6 +33,15 @@ public class ApiSpecs {
                 .setContentType(ContentType.JSON)
                 .addHeader("X-Test-Source", "RestAssured-Bootcamp")
                 .build();
+    }
+// Базовый запрос для https://httpbin.org
+    public static RequestSpecification httpBinRequestSpec() {
+        return baseRequestSpec(HTTPBIN_URL);
+    }
+
+// Базовый запрос для https://reqres.in
+    public static RequestSpecification httpRequestSpec() {
+        return baseRequestSpec(REQRES_URL);
     }
 
     /**
