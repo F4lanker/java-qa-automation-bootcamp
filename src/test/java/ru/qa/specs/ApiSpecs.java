@@ -8,6 +8,8 @@ import io.restassured.specification.ResponseSpecification;
 
 import static org.hamcrest.Matchers.lessThan;
 import static ru.qa.base.ApiTestConfig.BASE_URL;
+import static ru.qa.config.constansts.ApiConfig.HTTPBIN_URL;
+import static ru.qa.config.constansts.ApiConfig.REQRES_URL;
 
 public class ApiSpecs {
 
@@ -18,12 +20,28 @@ public class ApiSpecs {
     /**
      * Базовая спецификация для всех запросов.
      */
+
+    // Существующий метод — без изменений:
     public static RequestSpecification baseRequestSpec() {
+        return baseRequestSpec(BASE_URL);  // ✅ Делегируем в новый метод
+    }
+
+    // Новый перегруженный метод с кастомным baseUri:
+    public static RequestSpecification baseRequestSpec(String baseUrl) {
         return new RequestSpecBuilder()
-                .setBaseUri(BASE_URL)
+                .setBaseUri(baseUrl)
                 .setContentType(ContentType.JSON)
                 .addHeader("X-Test-Source", "RestAssured-Bootcamp")
                 .build();
+    }
+// Базовый запрос для https://httpbin.org
+    public static RequestSpecification httpBinRequestSpec() {
+        return baseRequestSpec(HTTPBIN_URL);
+    }
+
+// Базовый запрос для https://reqres.in
+    public static RequestSpecification httpRequestSpec() {
+        return baseRequestSpec(REQRES_URL);
     }
 
     /**
@@ -36,15 +54,24 @@ public class ApiSpecs {
                 .build();
     }
 
+    public static RequestSpecification loggingRequestSpec(String baseUrl) {
+        return new RequestSpecBuilder()
+                .addRequestSpecification(baseRequestSpec(baseUrl))  // ✅ Наследуем базовую
+                .log(io.restassured.filter.log.LogDetail.ALL)
+                .build();
+    }
+
     /**
      * Спецификация с авторизацией (для будущих задач).
      */
-    public static RequestSpecification authRequestSpec(String token) {
+    public static RequestSpecification authRequestSpec(String baseUrl, String token) {
         return new RequestSpecBuilder()
-                .addRequestSpecification(baseRequestSpec())
+                .addRequestSpecification(httpRequestSpec())
                 .addHeader("Authorization", "Bearer " + token)
                 .build();
     }
+
+
 
     /**
      * Базовая спецификация для успешных ответов (2xx).
