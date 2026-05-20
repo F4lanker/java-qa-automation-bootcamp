@@ -11,6 +11,7 @@ import ru.qa.specs.ApiSpecs;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static ru.qa.config.constansts.ApiConfig.REQRES_URL;
 import static ru.qa.specs.ApiSpecs.*;
 
 public abstract class BaseAuthApiTest {
@@ -37,6 +38,6 @@ public abstract class BaseAuthApiTest {
                 .then()
                 .extract().jsonPath().getString("accessToken");
 
-        authSpec = ApiSpecs.authRequestSpec(accessToken).header("X-API-Key", cfg.apiKey());
+        authSpec = ApiSpecs.authRequestSpec(REQRES_URL ,accessToken).header("X-API-Key", cfg.apiKey());
     }
 }

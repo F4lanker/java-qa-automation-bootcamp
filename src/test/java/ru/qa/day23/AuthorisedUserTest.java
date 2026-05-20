@@ -13,7 +13,7 @@ public class AuthorisedUserTest extends BaseAuthApiTest {
         given()
                 .spec(authSpec)
                 .when()
-                .get("/api/users/2 ")
+                .get("/api/users/2")
                 .then()
                 .statusCode(200)
                 .body("data.id", equalTo(2));

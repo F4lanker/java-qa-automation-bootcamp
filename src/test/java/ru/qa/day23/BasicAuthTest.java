@@ -17,12 +17,11 @@ public class BasicAuthTest {
     @DisplayName("Should pass with valid credentials")
     void shouldPassWithValidCredentials(){
       given()
-              .spec(loggingRequestSpec("https://httpbin.org/"))
+              .spec(httpBinRequestSpec())
               .auth().basic("user", "passwd")
               .when()
               .get("basic-auth/user/passwd")
               .then()
-              .log().all()
               .statusCode(200)
               .body("authenticated", equalTo(true));
     }
@@ -32,12 +31,11 @@ public class BasicAuthTest {
     @DisplayName("Should return 401 if credentials is not correct or empty")
     void shouldFailWithInvalidOrEmptyCredentials(String login, String password){
         given()
-                .spec(loggingRequestSpec("https://httpbin.org/"))
+                .spec(httpBinRequestSpec())
                 .auth().basic(login, password)
                 .when()
                 .get("basic-auth/user/passwd")
                 .then()
-                .log().all()
                 .statusCode(401);
     }
 

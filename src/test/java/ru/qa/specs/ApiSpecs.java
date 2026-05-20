@@ -64,7 +64,7 @@ public class ApiSpecs {
     /**
      * Спецификация с авторизацией (для будущих задач).
      */
-    public static RequestSpecification authRequestSpec(String token) {
+    public static RequestSpecification authRequestSpec(String baseUrl, String token) {
         return new RequestSpecBuilder()
                 .addRequestSpecification(httpRequestSpec())
                 .addHeader("Authorization", "Bearer " + token)
