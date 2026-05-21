@@ -18,7 +18,7 @@ public abstract class BaseAuthApiTest {
     protected static RequestSpecification authSpec;
 
 
-    public static final ApiKeyConfig API_KEY_CONFIG = ConfigFactory.create(ApiKeyConfig.class);
+   protected static final ApiKeyConfig API_KEY_CONFIG = ConfigFactory.create(ApiKeyConfig.class);
 
     @BeforeAll
     static void authenticate() {
@@ -28,9 +28,9 @@ public abstract class BaseAuthApiTest {
                 .body(Map.of("email", AuthConfig.REQRES_EMAIL,
                              "password", AuthConfig.REQRES_PASSWORD))
                 .when()
-                .get(AuthConfig.REQRES_LOGIN_PATH)
+                .post(AuthConfig.REQRES_LOGIN_PATH)
                 .then()
-                .extract().jsonPath().getString("accessToken");
+                .extract().jsonPath().getString("token");
 
         authSpec = ApiSpecs.authRequestSpec(REQRES_URL ,accessToken).header("X-API-Key", API_KEY_CONFIG.apiKey());
     }

@@ -3,14 +3,14 @@ package ru.qa.day23;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.qa.base.BaseAuthApiTest;
 import ru.qa.dto.LoginDto;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.notNullValue;
-import static ru.qa.base.BaseAuthApiTest.API_KEY_CONFIG;
 import static ru.qa.specs.ApiSpecs.*;
 
-public class BearerTokenTest {
+public class BearerTokenTest extends BaseAuthApiTest {
 
     @Test
     @DisplayName("Should return not NULL with status code 200")
