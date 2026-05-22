@@ -1,11 +1,10 @@
 package ru.qa.base;
 
 import io.restassured.specification.RequestSpecification;
-import org.aeonbits.owner.Config;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.BeforeAll;
+import ru.qa.config.constansts.ApiKeyConfig;
 import ru.qa.config.constansts.AuthConfig;
-import ru.qa.day23.BearerTokenTest;
 import ru.qa.specs.ApiSpecs;
 
 import java.util.Map;
@@ -18,26 +17,21 @@ public abstract class BaseAuthApiTest {
     protected static String accessToken;
     protected static RequestSpecification authSpec;
 
-    @Config.Sources("classpath:apikey.properties")
-    public interface ApiConfig extends Config {
-        @Key("reqres.api.key")
-        String apiKey();
-    }
 
-    static BearerTokenTest.ApiConfig cfg = ConfigFactory.create(BearerTokenTest.ApiConfig.class);
+   protected static final ApiKeyConfig API_KEY_CONFIG = ConfigFactory.create(ApiKeyConfig.class);
 
     @BeforeAll
     static void authenticate() {
         accessToken = given()
                 .spec(httpRequestSpec())
-                .header("X-API-Key", cfg.apiKey())
+                .header("X-API-Key", API_KEY_CONFIG.apiKey())
                 .body(Map.of("email", AuthConfig.REQRES_EMAIL,
                              "password", AuthConfig.REQRES_PASSWORD))
                 .when()
-                .get(AuthConfig.REQRES_LOGIN_PATH)
+                .post(AuthConfig.REQRES_LOGIN_PATH)
                 .then()
-                .extract().jsonPath().getString("accessToken");
+                .extract().jsonPath().getString("token");
 
-        authSpec = ApiSpecs.authRequestSpec(REQRES_URL ,accessToken).header("X-API-Key", cfg.apiKey());
+        authSpec = ApiSpecs.authRequestSpec(REQRES_URL ,accessToken).header("X-API-Key", API_KEY_CONFIG.apiKey());
     }
 }
