@@ -41,6 +41,7 @@ public class CookieReadTest {
     }
 
     @Test
+    @DisplayName("Cookies saved across session of 2 requests. User name is in the body of second reply")
     void shouldMaintainSessionAcrossRequests(){
         CookieFilter cookieFilter = new CookieFilter(); // change from required SessionFilter to Cookie filter as Session can't read custom cookie value as user
         String user = "nikolai";
