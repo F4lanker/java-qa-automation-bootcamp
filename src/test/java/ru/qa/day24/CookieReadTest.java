@@ -50,7 +50,7 @@ public class CookieReadTest {
                 .spec(httpBinRequestSpec())
                 .queryParam("user", user)
                 .filter(cookieFilter)
-                .config(config().redirect(redirectConfig().followRedirects(false))) // have to switch off redirect to read cookie
+                .config(config().redirect(redirectConfig().followRedirects(false))) // have to switch off redirect to read cookies.  If redirects happened inside "given()...when()...then()" — cookie from passing 302 is missing.
                 .log().all()
                 .when()
                 .get("/cookies/set")
