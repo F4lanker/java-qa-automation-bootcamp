@@ -12,7 +12,7 @@ import static ru.qa.specs.ApiSpecs.*;
 
 public class CookieReadTest {
     @Test
-    @DisplayName("GET: Querry params returned in cookies")
+    @DisplayName("GET: Query params returned in cookies")
     void shouldReceiveCookieFromServer() {
         String sessionId = "abc123";
         given()

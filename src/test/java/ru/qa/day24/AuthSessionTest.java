@@ -10,19 +10,18 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static ru.qa.specs.ApiSpecs.*;
 
-public class AuthSession {
-
+public class AuthSessionTest {
+    private static final ApiKeyConfig API_KEY_CONFIG = ConfigFactory.create(ApiKeyConfig.class);
     @Test
-    @DisplayName("Token extracted from 1-st reauest authorised in the 2-d request")
+    @DisplayName("Token extracted from 1st request authorized in the 2nd request")
     void shouldAuthorisedViaTokenExtraction() {
 
-        final ApiKeyConfig API_KEY_CONFIG = ConfigFactory.create(ApiKeyConfig.class);
         String email = "eve.holt@reqres.in";
         String password = "cityslicka";
 
         String token = given()
                 .spec(httpRequestSpec())
-                .header("X-API-Key", API_KEY_CONFIG.apiKey()) //без заголовка нельзя авторизоваться, чтобы избежать @BeforeAll продублировал API_KEY_CONFIG здесь, если есть вариант лучше объясни
+                .header("X-API-Key", API_KEY_CONFIG.apiKey()) //can't authorize without the header. Here can be used @BeforeAll and extends BaseAuthApiTest. But the task was NOT use @Before all
                 .body(( new LoginDto(email, password)))
                 .when()
                 .post("api/login")
@@ -32,7 +31,7 @@ public class AuthSession {
         given()
                 .spec(httpRequestSpec())
                 .header("X-API-Key", API_KEY_CONFIG.apiKey())
-                //.header("Authorization", "Bearer " + token)  //авторизация срабатыввает без токена, с одиним только
+                .header("Authorization", "Bearer " + token)  //authorization works without this line and token, only X-API-Key is required
                 .when()
                 .get("api/users/2")
                 .then()
