@@ -23,7 +23,7 @@ public abstract class BaseAuthApiTest {
     @BeforeAll
     static void authenticate() {
         accessToken = given()
-                .spec(httpRequestSpec())
+                .spec(reqresSpec())
                 .header("X-API-Key", API_KEY_CONFIG.apiKey())
                 .body(Map.of("email", AuthConfig.REQRES_EMAIL,
                              "password", AuthConfig.REQRES_PASSWORD))

@@ -20,7 +20,7 @@ public class BearerTokenTest extends BaseAuthApiTest {
         String password = "cityslicka";
 
         given()
-                .spec(httpRequestSpec())
+                .spec(reqresSpec())
                 .header("X-API-Key", API_KEY_CONFIG.apiKey())
                 .contentType(ContentType.JSON)
                 .body(new LoginDto(email, password))
@@ -39,7 +39,7 @@ public class BearerTokenTest extends BaseAuthApiTest {
         String password = "pass";
 
         given()
-                .spec(httpRequestSpec())
+                .spec(reqresSpec())
                 .header("X-API-Key", API_KEY_CONFIG.apiKey())
                 .contentType(ContentType.JSON)
                 .body(new LoginDto(email, password))
