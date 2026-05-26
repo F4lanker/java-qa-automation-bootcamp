@@ -30,7 +30,6 @@ public class ApiSpecs {
     public static RequestSpecification baseRequestSpec(String baseUrl) {
         return new RequestSpecBuilder()
                 .setBaseUri(baseUrl)
-                .setContentType(ContentType.JSON)
                 .addHeader("X-Test-Source", "RestAssured-Bootcamp")
                 .build();
     }
@@ -40,7 +39,7 @@ public class ApiSpecs {
     }
 
 // Базовый запрос для https://reqres.in
-    public static RequestSpecification httpRequestSpec() {
+    public static RequestSpecification reqresSpec() {
         return baseRequestSpec(REQRES_URL);
     }
 
@@ -66,7 +65,7 @@ public class ApiSpecs {
      */
     public static RequestSpecification authRequestSpec(String baseUrl, String token) {
         return new RequestSpecBuilder()
-                .addRequestSpecification(httpRequestSpec())
+                .addRequestSpecification(reqresSpec())
                 .addHeader("Authorization", "Bearer " + token)
                 .build();
     }

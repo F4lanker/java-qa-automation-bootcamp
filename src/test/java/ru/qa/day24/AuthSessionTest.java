@@ -20,7 +20,7 @@ public class AuthSessionTest {
         String password = "cityslicka";
 
         String token = given()
-                .spec(httpRequestSpec())
+                .spec(reqresSpec())
                 .header("X-API-Key", API_KEY_CONFIG.apiKey()) //can't authorize without the header. Here can be used @BeforeAll and extends BaseAuthApiTest. But the task was NOT use @Before all
                 .body(( new LoginDto(email, password)))
                 .when()
@@ -29,7 +29,7 @@ public class AuthSessionTest {
                 .extract().jsonPath().getString("token");
 
         given()
-                .spec(httpRequestSpec())
+                .spec(reqresSpec())
                 .header("X-API-Key", API_KEY_CONFIG.apiKey())
                 .header("Authorization", "Bearer " + token)  //authorization works without this line and token, only X-API-Key is required
                 .when()
