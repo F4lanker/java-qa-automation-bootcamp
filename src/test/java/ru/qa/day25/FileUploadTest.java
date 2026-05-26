@@ -11,16 +11,14 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class FileUploadTest {
-
+    
     @Test
     @DisplayName("Should upload .txt file from resource and response body is NOT null")
     void shouldUploadFileSuccessfully(){
         given()
                 .spec(ApiSpecs.httpBinRequestSpec())
-                .contentType("multipart/form-data")
                 .multiPart("file", new File("src/test/resources/test-file.txt"))
                 .when()
-                .log().all()
                 .post("/post")
                 .then()
                 .statusCode(200)
@@ -29,10 +27,9 @@ public class FileUploadTest {
 
     @Test
     @DisplayName("Should upload meta-data with .txt file")
-    void shouldUploadFileetaData(){
+    void shouldUploadFileWithMetadata(){
         given()
                 .spec(ApiSpecs.httpBinRequestSpec())
-                .contentType("multipart/form-data")
                 .multiPart(new File(ClassLoader.getSystemResource("test-file.txt").getFile()))
                 .multiPart("description", "test upload")
                 .log().all()

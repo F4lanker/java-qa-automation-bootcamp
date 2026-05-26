@@ -30,7 +30,6 @@ public class ApiSpecs {
     public static RequestSpecification baseRequestSpec(String baseUrl) {
         return new RequestSpecBuilder()
                 .setBaseUri(baseUrl)
-                .setContentType(ContentType.JSON)
                 .addHeader("X-Test-Source", "RestAssured-Bootcamp")
                 .build();
     }
