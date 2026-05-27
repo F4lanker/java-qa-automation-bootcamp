@@ -1,0 +1,12 @@
+{
+  "$schema": "https://jsonplaceholder.typicode.com/users",
+  "type": "object",
+  "required": ["id", "name", "email", "phone", "website"],
+  "properties": {
+    "id":    { "type": "integer" },
+    "name":  { "type": "string"  },
+    "email": { "type": "string", "format": "email" },
+    "phone": { "type": "string" },
+    "website":{ "type": "string" }
+  }
+}
