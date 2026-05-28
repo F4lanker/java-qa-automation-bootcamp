@@ -2,8 +2,8 @@ package ru.qa.day26;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.qa.specs.ApiSpecs;
 
+import static ru.qa.specs.ApiSpecs.*;
 import static ru.qa.util.SchemaValidatorUtil.checkSchemaJson;
 
 public class PostSchemaTest {
@@ -14,7 +14,7 @@ public class PostSchemaTest {
         int postId = 1;
         String getPath = "/posts/" + postId;
         String schemaPath = "schemas/post-schema.json";
-        checkSchemaJson(getPath, schemaPath, ApiSpecs.baseRequestSpec());
+        checkSchemaJson(getPath, schemaPath, baseRequestSpec());
     }
 
     @Test
@@ -22,6 +22,6 @@ public class PostSchemaTest {
     void shouldMatchPostListSchema() {
         String getPath = "/posts";
         String schemaPath = "schemas/post-list-schema.json";
-        checkSchemaJson(getPath, schemaPath, ApiSpecs.baseRequestSpec());
+        checkSchemaJson(getPath, schemaPath, baseRequestSpec());
     }
 }

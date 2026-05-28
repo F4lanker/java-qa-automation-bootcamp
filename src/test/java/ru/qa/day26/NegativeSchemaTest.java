@@ -11,7 +11,7 @@ public class NegativeSchemaTest {
     @Test
     @DisplayName("GET: /post should fail with error if non existen field in schema is required")
     void shouldFailWhenRequiredFieldMissing(){
-        String getPath = "/posts";
+        String getPath = "/posts/1";
         String schemaPath = "schemas/invalid-schema.json";
 
         assertThrows(AssertionError.class, () -> {
