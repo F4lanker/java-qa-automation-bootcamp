@@ -5,7 +5,7 @@ import io.restassured.specification.RequestSpecification;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
-public class SchemaValidatorUtil {
+public final class SchemaValidatorUtil {
     private SchemaValidatorUtil(){
         throw new AssertionError("Utility class");
     }
