@@ -23,10 +23,10 @@ public class TimingFilter implements Filter {
         Response response = ctx.next(requestSpec, responseSpec);
         long duration = System.currentTimeMillis() - timeStart;
 
-        if(duration > thresholdMs) {
-          throw new AssertionError(
-                  String.format("Request exceeded threshold: %dms > %dms", duration, thresholdMs)
-          );
+        if (duration > thresholdMs) {
+            throw new AssertionError(
+                    String.format("Request exceeded threshold: %dms > %dms", duration, thresholdMs)
+            );
 
         }
         return response;
