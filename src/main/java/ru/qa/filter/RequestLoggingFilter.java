@@ -12,19 +12,19 @@ public class RequestLoggingFilter implements Filter {
                            FilterableResponseSpecification responseSpec,
                            FilterContext ctx) {
 
-        long timStart = System.currentTimeMillis();
-
         // Logging method and URL
-        System.out.println(requestSpec.getMethod() + requestSpec.getURI());
+        System.out.printf("-> %s, %s%n", requestSpec.getMethod(), requestSpec.getURI());
 
-        // Передаём управление дальше — выполняется реальный запрос
+        //Track response starting
+        long timeStart = System.currentTimeMillis();
+
+        // Perform real request and get the response
         Response response = ctx.next(requestSpec, responseSpec);
-        long timEnd = System.currentTimeMillis();
+        long duration = System.currentTimeMillis() - timeStart;
 
-        String timeResponse = String.valueOf((timEnd - timStart));
         //Logging Status code and response time
-        System.out.println(response.getStatusCode() + timeResponse); // здесь время надо померить
+        System.out.printf("<- %d (%dms)%n", response.getStatusCode(), duration);
 
-        return response; // возвращаем ответ в цепочку
+        return response; // return whole chain
     }
 }
