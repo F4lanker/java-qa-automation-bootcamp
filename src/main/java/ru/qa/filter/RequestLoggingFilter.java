@@ -6,7 +6,21 @@ import io.restassured.response.Response;
 import io.restassured.specification.FilterableRequestSpecification;
 import io.restassured.specification.FilterableResponseSpecification;
 
+import java.io.PrintStream;
+
 public class RequestLoggingFilter implements Filter {
+    private final PrintStream output;
+
+    // Default constructor — write to System.out
+    public RequestLoggingFilter() {
+        this.output = System.out;
+    }
+
+    // Custom stream constructor — write upon request
+    public RequestLoggingFilter(PrintStream output) {
+        this.output = output;
+    }
+
     @Override
     public Response filter(FilterableRequestSpecification requestSpec,
                            FilterableResponseSpecification responseSpec,
