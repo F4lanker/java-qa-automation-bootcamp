@@ -4,10 +4,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.qa.filter.RequestLoggingFilter;
+import ru.qa.filter.CustomRequestLoggingFilter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,25 +18,26 @@ import static ru.qa.specs.ApiSpecs.*;
 
 public class FilterLoggingTest {
 
-    // JUnit 5 позволяет захватить System.out
-// Добавь в класс:
     private final PrintStream originalOut = System.out;
     private final ByteArrayOutputStream outputCapture = new ByteArrayOutputStream();
 
     @BeforeEach
-    void setUp() { System.setOut(new PrintStream(outputCapture));
-        }
-        
+    void setUp() {
+        System.setOut(new PrintStream(outputCapture));
+    }
+
     @AfterEach
-    void tearDown() { System.setOut(originalOut); }
+    void tearDown() {
+        System.setOut(originalOut);
+    }
 
 
     @Test
     @DisplayName("GET /users/[id] has a custom logs")
-            void shouldLogRequestAndResponse() {
+    void shouldLogRequestAndResponse() {
         given()
                 .spec(baseRequestSpec())
-                .filter(new RequestLoggingFilter())
+                .filter(new CustomRequestLoggingFilter())
                 .when()
                 .get("/users/1")
                 .then()
@@ -45,5 +49,25 @@ public class FilterLoggingTest {
         System.out.println(log); // почему не видно в консоли этот вывод?
     }
 
+    @Test
+    @DisplayName("GET /posts/1 - logs saved to the api-requests.log")
+    void shouldWriteLogsToFile() throws Exception {
+        //create FileStream instead of Sustem.out
+        Path logFile = Paths.get("target", "logs", "api-requests.log");
+        Files.createDirectories(logFile.getParent());
+
+        try (PrintStream fileStream = new PrintStream(logFile.toFile())) {
+            given()
+                    .spec(baseRequestSpec())
+                    .filter(new CustomRequestLoggingFilter(fileStream))
+                    .log().all()
+                    .when()
+                    .get("/posts/1")
+                    .then()
+                    .statusCode(200);
+        }
+
+        assertTrue(Files.size(logFile) > 0);
+    }
 
 }
