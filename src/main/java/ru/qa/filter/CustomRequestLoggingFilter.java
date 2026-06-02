@@ -8,16 +8,16 @@ import io.restassured.specification.FilterableResponseSpecification;
 
 import java.io.PrintStream;
 
-public class RequestLoggingFilter implements Filter {
+public class CustomRequestLoggingFilter implements Filter {
     private final PrintStream output;
 
     // Default constructor — write to System.out
-    public RequestLoggingFilter() {
+    public CustomRequestLoggingFilter() {
         this.output = System.out;
     }
 
     // Custom stream constructor — write upon request
-    public RequestLoggingFilter(PrintStream output) {
+    public CustomRequestLoggingFilter(PrintStream output) {
         this.output = output;
     }
 
@@ -27,7 +27,7 @@ public class RequestLoggingFilter implements Filter {
                            FilterContext ctx) {
 
         // Logging method and URL
-        System.out.printf("-> %s, %s%n", requestSpec.getMethod(), requestSpec.getURI());
+        output.printf("-> %s, %s%n", requestSpec.getMethod(), requestSpec.getURI());
 
         //Track response starting
         long timeStart = System.currentTimeMillis();
@@ -37,7 +37,7 @@ public class RequestLoggingFilter implements Filter {
         long duration = System.currentTimeMillis() - timeStart;
 
         //Logging Status code and response time
-        System.out.printf("<- %d (%dms)%n", response.getStatusCode(), duration);
+        output.printf("<- %d (%dms)%n", response.getStatusCode(), duration);
 
         return response; // return whole chain
     }
