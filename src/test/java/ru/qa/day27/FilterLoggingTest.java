@@ -1,9 +1,8 @@
 package ru.qa.day27;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import listener.RetryListener;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import ru.qa.filter.CustomRequestLoggingFilter;
 
 import java.io.ByteArrayOutputStream;
@@ -15,6 +14,8 @@ import java.nio.file.Paths;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static ru.qa.specs.ApiSpecs.*;
+
+@ExtendWith(RetryListener.class)
 
 public class FilterLoggingTest {
 
@@ -29,6 +30,11 @@ public class FilterLoggingTest {
     @AfterEach
     void tearDown() {
         System.setOut(originalOut);
+    }
+
+    @AfterAll
+    public static void saveFailed() { // save failed test to resources.failedTests.txt
+        RetryListener.saveFailedTests();
     }
 
 
@@ -52,7 +58,7 @@ public class FilterLoggingTest {
     @Test
     @DisplayName("GET /posts/1 - logs saved to the api-requests.log")
     void shouldWriteLogsToFile() throws Exception {
-        //create FileStream instead of Sustem.out
+        //create FileStream instead of System.out
         Path logFile = Paths.get("target", "logs", "api-requests.log");
         Files.createDirectories(logFile.getParent());
 
