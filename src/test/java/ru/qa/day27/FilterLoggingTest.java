@@ -30,6 +30,7 @@ public class FilterLoggingTest {
     @AfterEach
     void tearDown() {
         System.setOut(originalOut);
+        outputCapture.reset();
     }
 
     @AfterAll
@@ -52,7 +53,8 @@ public class FilterLoggingTest {
         String log = outputCapture.toString();
         assertTrue(log.contains("GET"));
         assertTrue(log.contains("200"));
-        System.out.println(log); // почему не видно в консоли этот вывод?
+
+        originalOut.println(log);
     }
 
     @Test
@@ -66,7 +68,6 @@ public class FilterLoggingTest {
             given()
                     .spec(baseRequestSpec())
                     .filter(new CustomRequestLoggingFilter(fileStream))
-                    .log().all()
                     .when()
                     .get("/posts/1")
                     .then()

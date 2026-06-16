@@ -16,11 +16,10 @@ public class TimingFilterTest {
 
     @Test
     @DisplayName("GET: /users/[id] should pass within threshold")
-    void shouldPassWithinThreshold(){
+    void shouldPassWithinThreshold() {
         given()
                 .spec(baseRequestSpec())
                 .filter(new TimingFilter(PASS_THRESHOLD_MS))
-                .log().all()
                 .when()
                 .get(TEST_PATH)
                 .then()
@@ -29,18 +28,16 @@ public class TimingFilterTest {
 
     @Test
     @DisplayName("Should fail with extra low threshold")
-    void shouldFailWhenExceedsThreshold(){
-        int responseThreshold = 1;
-        int userId = 1;
+    void shouldFailWhenExceedsThreshold() {
+
         assertThrows(AssertionError.class, () ->
-        given()
-            .spec(baseRequestSpec())
-            .filter(new TimingFilter(FAIL_THRESHOLD_MS))
-            .log().all()
-            .when()
-            .get(TEST_PATH)
-            .then()
-            .statusCode(200)
+                             given()
+                                     .spec(baseRequestSpec())
+                                     .filter(new TimingFilter(FAIL_THRESHOLD_MS))
+                                     .when()
+                                     .get(TEST_PATH)
+                                     .then()
+                                     .statusCode(200)
                     );
     }
 }
