@@ -5,22 +5,24 @@ import org.junit.jupiter.api.Test;
 import ru.qa.filter.TimingFilter;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.qa.specs.ApiSpecs.*;
 
 public class TimingFilterTest {
 
+    private static final int PASS_THRESHOLD_MS = 3000;
+    private static final int FAIL_THRESHOLD_MS = 1;
+    private static final String TEST_PATH = "/users/1";
+
     @Test
     @DisplayName("GET: /users/[id] should pass within threshold")
     void shouldPassWithinThreshold(){
-        int responseThreshold = 3000; // here I want to make int private, but highlighted by IJ
-        int userId = 1;
-
         given()
                 .spec(baseRequestSpec())
-                .filter(new TimingFilter(responseThreshold))
+                .filter(new TimingFilter(PASS_THRESHOLD_MS))
                 .log().all()
                 .when()
-                .get("/users/" + userId)
+                .get(TEST_PATH)
                 .then()
                 .statusCode(200);
     }
@@ -30,13 +32,15 @@ public class TimingFilterTest {
     void shouldFailWhenExceedsThreshold(){
         int responseThreshold = 1;
         int userId = 1;
-
+        assertThrows(AssertionError.class, () ->
         given()
             .spec(baseRequestSpec())
-            .filter(new TimingFilter(responseThreshold))
+            .filter(new TimingFilter(FAIL_THRESHOLD_MS))
             .log().all()
             .when()
-            .get("/users/" + userId)
+            .get(TEST_PATH)
             .then()
+            .statusCode(200)
+                    );
     }
 }
