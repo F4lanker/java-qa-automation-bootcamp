@@ -16,11 +16,6 @@ public class AllureBasicTest {
         return body;
     }
 
-    @Test
-    @Feature("User management")
-    @Story("Get user by id")
-    @Description("GET/user/[id] should response with valid user data")
-    @Severity(SeverityLevel.CRITICAL)
     void shouldGetUserWithAllureSteps() {
 
         int userId = 1;
@@ -46,6 +41,10 @@ public class AllureBasicTest {
         SchemaValidatorUtil.checkSavedJsonSchema(response, schemaPath);
     }
 
+
+    @Feature("User management")
+    @Story("Get posts user with ID")
+    @Severity(SeverityLevel.NORMAL)
     @Test
     @Description("Return GET /posts/[id] - body")
     void shouldAttachResponseToReport() {
@@ -58,6 +57,6 @@ public class AllureBasicTest {
                 .statusCode(200)
                 .extract().body().asString();
 
-        attachResponse(response);
+        String attachment = attachResponse(response);
     }
 }
