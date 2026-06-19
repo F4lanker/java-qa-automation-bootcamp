@@ -21,7 +21,7 @@ public final class SchemaValidatorUtil {
                 .body(matchesJsonSchemaInClasspath(jsonSchemaPath));
     }
 
-    public static void checkSavedJsonSchema(String jsonResponseBody, String jsonSchemaPath) {
+    public static void (String jsonResponseBody, String jsonSchemaPath) {
         MatcherAssert.assertThat(
                 jsonResponseBody,
                 matchesJsonSchemaInClasspath(jsonSchemaPath));
