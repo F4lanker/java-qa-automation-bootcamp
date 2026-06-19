@@ -1,5 +1,6 @@
 package ru.qa.specs;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
@@ -31,6 +32,7 @@ public class ApiSpecs {
         return new RequestSpecBuilder()
                 .setBaseUri(baseUrl)
                 .addHeader("X-Test-Source", "RestAssured-Bootcamp")
+                .addFilter(new AllureRestAssured())
                 .build();
     }
 // Базовый запрос для https://httpbin.org
