@@ -1,36 +1,22 @@
 package ru.qa.day29;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import ru.qa.provider.JsonFileArgumentsProvider.JsonSource;
 import testData.UserTestCase;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import static io.restassured.RestAssured.given;
 import static ru.qa.specs.ApiSpecs.*;
 
 public class UserValidationJsonDrivenTest {
 
-    static Stream<UserTestCase> userTestCases() throws IOException {
-
-        InputStream is = UserValidationJsonDrivenTest.class
-                .getClassLoader()
-                .getResourceAsStream("testData/UserTestCase/users.json");
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        UserTestCase[] cases = mapper.readValue(is, UserTestCase[].class);
-        return Arrays.stream(cases);
-    }
-
     @ParameterizedTest(name = "User validation: {0}")
-    @MethodSource("userTestCases")
+    @JsonSource(
+            path = "testData/UserTestCase/users.json",
+            type = UserTestCase.class
+    )
     void shouldValidateUserCreation(UserTestCase testCase) {
         given()
                 .spec(baseRequestSpec())
