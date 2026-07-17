@@ -1,7 +1,7 @@
 [
-  { "name": "Alice", "email": "alice@test.com", "expectedStatus": 201 },
-  {"name": "Alice", "email": "1@test.com", "expectedStatus": 201},
-  { "name": "", "email": "test@sample.com", "expectedStatus": 201 },
-  {"name": "George", "email": "", "expectedStatus": 201}
+  { "scenario": "Valid user — Alice", "name": "Alice", "email": "alice@test.com", "expectedStatus": 201 },
+  {"scenario": "Valid user same name different email", "name": "Alice", "email": "1@test.com", "expectedStatus": 201},
+  {"scenario": "Invalid — empty name", "name": "", "email": "test@sample.com", "expectedStatus": 201 },
+  { "scenario": "Invalid — malformed email", "name": "George", "email": "", "expectedStatus": 201}
 
 ]

@@ -1,8 +1,6 @@
-userId,title,body
-1,Case-1,Sample-Body
-99,Case-2,Текст
-5,Case-3,
-999,Case-4,"Lorem Ipsum is simply dummy text of the printing and typesetting industry. ""Lorem Ipsum"" has been the industry's standard dummy text ever since 1966"
-23,Case-5,body
-
-
+scenario,userId,title,body
+Valid post,1,Automation post,Learning RestAssured
+Non-existent userId,99,Post for ghost user,Some body
+Empty body — edge case,5,Minimal post,
+Long body,999,Long post,"Lorem Ipsum is simply dummy text..."
+Short title,23,Hi,body
