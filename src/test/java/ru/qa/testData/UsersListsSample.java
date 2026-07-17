@@ -1,4 +1,4 @@
-package testData;
+package ru.qa.testData;
 
 import ru.qa.days.day4.User;
 
@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static testData.UserSamples.*;
+import static ru.qa.testData.UserSamples.*;
 
 public class UsersListsSample {
     //test data -  users lists

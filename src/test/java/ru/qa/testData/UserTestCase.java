@@ -1,4 +1,4 @@
-package testData;
+package ru.qa.testData;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

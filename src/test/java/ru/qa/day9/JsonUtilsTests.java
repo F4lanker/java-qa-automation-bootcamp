@@ -11,8 +11,8 @@ import ru.qa.days.util.JsonUtils;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static testData.UserSamples.TEENAGE_USER;
-import static testData.UserSamples.VALID_USER;
+import static ru.qa.testData.UserSamples.TEENAGE_USER;
+import static ru.qa.testData.UserSamples.VALID_USER;
 
 public class JsonUtilsTests {
     @Nested

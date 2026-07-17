@@ -1,4 +1,4 @@
-package testData;
+package ru.qa.testData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
