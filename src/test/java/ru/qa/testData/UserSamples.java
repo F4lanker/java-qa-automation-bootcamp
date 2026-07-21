@@ -1,4 +1,4 @@
-package testData;
+package ru.qa.testData;
 
 import ru.qa.days.day4.User;
 

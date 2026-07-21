@@ -9,9 +9,9 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static ru.qa.days.day7.StreamUtils.*;
-import static testData.ListSamplesForTests.*;
-import static testData.UserSamples.*;
-import static testData.UsersListsSample.*;
+import static ru.qa.testData.ListSamplesForTests.*;
+import static ru.qa.testData.UserSamples.*;
+import static ru.qa.testData.UsersListsSample.*;
 
 public class StreamUtilsTest {
     @Nested

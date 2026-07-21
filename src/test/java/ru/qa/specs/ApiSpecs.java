@@ -80,7 +80,7 @@ public class ApiSpecs {
     public static ResponseSpecification successResponseSpec() {
         return new ResponseSpecBuilder()
                 .expectContentType(ContentType.JSON)
-                .expectStatusCode(200)
+                .expectStatusCode(201)
                 .expectResponseTime(lessThan(2000L))
                 .build();
     }

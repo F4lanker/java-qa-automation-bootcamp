@@ -6,7 +6,7 @@ import ru.qa.days.day5.ListUtils;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.*;
-import static testData.ListSamplesForTests.*;
+import static ru.qa.testData.ListSamplesForTests.*;
 
 public class ListUtilsTest {
 

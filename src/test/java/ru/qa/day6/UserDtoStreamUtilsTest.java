@@ -11,8 +11,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static ru.qa.days.day6.UserStreamUtils.*;
-import static testData.UserSamples.*;
-import static testData.UsersListsSample.*;
+import static ru.qa.testData.UserSamples.*;
+import static ru.qa.testData.UsersListsSample.*;
 
 
 public class UserDtoStreamUtilsTest {
