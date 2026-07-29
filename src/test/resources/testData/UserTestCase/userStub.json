@@ -1,0 +1,4 @@
+[
+  { "id": 1, "scenario": "Valid user — Alice", "name": "Alice", "email": "alice@test.com", "expectedStatus": 201 },
+  {"id": 2, "scenario": "Valid user same name different email", "name": "Alice", "email": "1@test.com", "expectedStatus": 201}
+]
