@@ -48,7 +48,7 @@ public class ErrorPathTest extends WireMockExt {
     @Feature("User API")
     @Story("Invalid user")
     @DisplayName("Invalid user")
-    @ParameterizedTest(name=">{1}")
+    @ParameterizedTest(name=">{0}")
     @JsonFileArgumentsProvider.JsonSource(
             path = "testData/UserTestCase/userErrorStub.json",
             type = UserErrorTestCase.class

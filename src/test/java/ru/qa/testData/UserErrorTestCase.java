@@ -10,4 +10,7 @@ public class UserErrorTestCase {
     private String scenario;
     private int expectedStatus;
     private String error_message;
+
+    @Override
+    public String toString() {return scenario;}
 }
