@@ -11,7 +11,9 @@ import static ru.qa.specs.ApiSpecs.*;
 
 /**
  * Smoke API tests for https://restful-booker.herokuapp.com
- * GET /ping — simple health check with status code
+ * GET /ping — simple health check with status code 201
+ * chek response header: "Content-Type", "text/plain; charset=utf-8"
+ * body "Created"
  */
 public class SmokeApiRestfulBookerTest {
     private static final int RESPONSE_TIMEOUT = 3000;
