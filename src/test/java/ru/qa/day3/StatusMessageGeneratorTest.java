@@ -7,7 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import ru.qa.config.constansts.HttpStatus;
+import ru.qa.config.constants.HttpStatus;
 import ru.qa.days.day3.StatusMessageGenerator;
 
 import static org.junit.jupiter.api.Assertions.*;
