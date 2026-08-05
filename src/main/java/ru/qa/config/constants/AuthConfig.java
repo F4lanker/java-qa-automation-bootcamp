@@ -1,4 +1,4 @@
-package ru.qa.config.constansts;
+package ru.qa.config.constants;
 
 public final class AuthConfig {
     public static final String REQRES_EMAIL = "eve.holt@reqres.in";

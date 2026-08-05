@@ -1,4 +1,4 @@
-package ru.qa.config.constansts;
+package ru.qa.config.constants;
 
 public class Message {
     private Message(){}

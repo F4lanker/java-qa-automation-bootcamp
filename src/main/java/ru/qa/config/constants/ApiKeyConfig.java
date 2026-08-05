@@ -1,4 +1,4 @@
-package ru.qa.config.constansts;
+package ru.qa.config.constants;
 
 import org.aeonbits.owner.Config;
 @Config.Sources("classpath:apikey.properties")
