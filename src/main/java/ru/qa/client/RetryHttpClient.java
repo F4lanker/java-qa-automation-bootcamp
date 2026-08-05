@@ -4,7 +4,7 @@ import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 
 import static io.restassured.RestAssured.given;
-import static ru.qa.config.constansts.ApiConfig.BASE_URL;
+import static ru.qa.config.constants.ApiConfig.BASE_URL;
 
 /**
  * HTTP client with retry logic on failure.

@@ -3,7 +3,7 @@ package ru.qa.client;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 
-import static ru.qa.config.constansts.ApiConfig.BASE_URL;
+import static ru.qa.config.constants.ApiConfig.BASE_URL;
 
 /**
  * Base API client with Template Method pattern.
