@@ -9,25 +9,24 @@ import io.restassured.specification.ResponseSpecification;
 
 import static org.hamcrest.Matchers.lessThan;
 import static ru.qa.base.ApiTestConfig.BASE_URL;
-import static ru.qa.config.constansts.ApiConfig.HTTPBIN_URL;
-import static ru.qa.config.constansts.ApiConfig.REQRES_URL;
+import static ru.qa.config.constants.ApiConfig.*;
 
-public class ApiSpecs {
+public final class ApiSpecs {
 
-    private ApiSpecs(){
+    private ApiSpecs() {
         throw new AssertionError("Utility class");
     }
 
     /**
-     * Базовая спецификация для всех запросов.
+     * Base spec for all requests
      */
 
-    // Существующий метод — без изменений:
+
     public static RequestSpecification baseRequestSpec() {
         return baseRequestSpec(BASE_URL);  // ✅ Делегируем в новый метод
     }
 
-    // Новый перегруженный метод с кастомным baseUri:
+    // Custom baseUri method:
     public static RequestSpecification baseRequestSpec(String baseUrl) {
         return new RequestSpecBuilder()
                 .setBaseUri(baseUrl)
@@ -35,18 +34,23 @@ public class ApiSpecs {
                 .addFilter(new AllureRestAssured())
                 .build();
     }
-// Базовый запрос для https://httpbin.org
+
+    // Base request for https://httpbin.org
     public static RequestSpecification httpBinRequestSpec() {
         return baseRequestSpec(HTTPBIN_URL);
     }
 
-// Базовый запрос для https://reqres.in
+    // Base request for https://reqres.in
     public static RequestSpecification reqresSpec() {
         return baseRequestSpec(REQRES_URL);
     }
 
+    public static RequestSpecification rstflBookerReqSpec() {
+        return baseRequestSpec(RESTFULBKR_URL);
+    }
+
     /**
-     * Спецификация с логированием (для отладки).
+     * Logging spec (for debug).
      */
     public static RequestSpecification loggingRequestSpec() {
         return new RequestSpecBuilder()
@@ -63,19 +67,18 @@ public class ApiSpecs {
     }
 
     /**
-     * Спецификация с авторизацией (для будущих задач).
+     * Auth request spec
      */
     public static RequestSpecification authRequestSpec(String baseUrl, String token) {
         return new RequestSpecBuilder()
-                .addRequestSpecification(reqresSpec())
+                .addRequestSpecification(baseRequestSpec(baseUrl))
                 .addHeader("Authorization", "Bearer " + token)
                 .build();
     }
 
 
-
     /**
-     * Базовая спецификация для успешных ответов (2xx).
+     * Base spec for success response (2xx).
      */
     public static ResponseSpecification successResponseSpec() {
         return new ResponseSpecBuilder()
@@ -86,7 +89,7 @@ public class ApiSpecs {
     }
 
     /**
-     * Спецификация для созданных ресурсов (201).
+     * Base spec for created (201).
      */
     public static ResponseSpecification createdResponseSpec() {
         return new ResponseSpecBuilder()
@@ -96,7 +99,7 @@ public class ApiSpecs {
     }
 
     /**
-     * Спецификация для ошибок клиента (4xx).
+     * Response spec for client errors (4xx).
      */
     public static ResponseSpecification clientErrorResponseSpec() {
         return new ResponseSpecBuilder()
@@ -106,7 +109,7 @@ public class ApiSpecs {
     }
 
     /**
-     * Спецификация для ошибок клиента (404).
+     * Client error response (404).
      */
     public static ResponseSpecification notFoundResponseSpec() {
         return new ResponseSpecBuilder()
