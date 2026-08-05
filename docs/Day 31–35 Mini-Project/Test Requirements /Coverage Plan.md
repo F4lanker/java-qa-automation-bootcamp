@@ -3,8 +3,8 @@
 ## Task 1 — Smoke & config
 - [x] `RestfulBookerConfig` / `rstflBookerReqSpec()` wired into `ApiSpecs`
 - [x] `GET /ping` → `201` (matches documented behavior, see `day31-api-notes.md`)
-- [ ] Response body assertion (expect empty body)
-- [ ] Response time assertion (basic SLA, e.g. `< 3000ms` — public sandbox, keep the threshold generous)
+- [x] Response body assertion (expect empty body)
+- [x] Response time assertion (basic SLA, e.g. `< 3000ms` — public sandbox, keep the threshold generous)
 
 ## Task 2 — Auth layer
 - [ ] `POST /auth` with valid credentials → token returned
