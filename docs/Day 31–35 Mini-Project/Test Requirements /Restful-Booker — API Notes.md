@@ -30,6 +30,18 @@
 
 > These are from other testers' public write-ups, not from official docs or our own verification yet. Treat as hypotheses to confirm with our own negative tests (Task 4), not as established facts to hardcode into assertions.
 
+## Authentication
+
+`POST /auth` with `{ "username": "...", "password": "..." }` returns `{ "token": "..." }`.
+
+For `PUT`/`PATCH`/`DELETE`, the token must be attached — official docs list **two** alternatives:
+- `Cookie: token=<token>`
+- `Authorization: Basic <base64(admin:password123)>`
+
+**Not confirmed by us yet, reported by another tester (kat-kan, public repo):** the `Authorization: Basic` path returned `403 Forbidden` in their runs — only the `Cookie` header worked reliably. Docs and reality may disagree here. Verify both ourselves in Task 2 before picking one as the default in `authSpec`; don't assume the docs are accurate just because they list two options.
+
+This is a structurally different transport than reqres.in's auth (`X-API-Key` header + Bearer-style token). Not just different field names (`username` vs `email`) — a different mechanism for attaching the token to the request. Relevant for the auth-abstraction architecture decision (see Day 31 chat notes).
+
 ## Data behavior
 - Pre-loaded with 10 records by default.
 - Full reset to the default seed every 10 minutes — don't write tests that assume a specific total record count persists across runs.
