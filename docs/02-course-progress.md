@@ -202,9 +202,9 @@ ru.qa.base.BaseEndToEndTest     — Template Method Pattern
 
 ### Ключевые классы (src/main):
 ```
-ru.qa.config.constansts.ApiConfig     — BASE_URL, HTTPBIN_URL, REQRES_URL
-ru.qa.config.constansts.ApiKeyConfig  — Owner-интерфейс для API ключей
-ru.qa.config.constansts.AuthConfig    — учётные данные для авторизации
+ru.qa.config.constants.ApiConfig     — BASE_URL, HTTPBIN_URL, REQRES_URL
+ru.qa.config.constants.ApiKeyConfig  — Owner-интерфейс для API ключей
+ru.qa.config.constants.AuthConfig    — учётные данные для авторизации
 ru.qa.specs.ApiSpecs                  — baseRequestSpec(), baseRequestSpec(String baseUri), authRequestSpec()...
                                          + AllureRestAssured фильтр встроен в baseRequestSpec
 ru.qa.filter.CustomRequestLoggingFilter — DI через PrintStream, гибкое логирование

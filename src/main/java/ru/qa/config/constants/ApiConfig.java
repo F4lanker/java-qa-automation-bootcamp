@@ -9,6 +9,7 @@ public final class ApiConfig {
     public static final String BASE_URL = "https://jsonplaceholder.typicode.com";
     public static final String HTTPBIN_URL = "https://httpbin.org";
     public static final String REQRES_URL = "https://reqres.in";
+    public static final String RESTFULBKR_URL = "https://restful-booker.herokuapp.com";
 
     private ApiConfig() { // ✅ private конструктор
         throw new AssertionError("Utility class");
