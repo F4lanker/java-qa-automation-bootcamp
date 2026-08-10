@@ -89,6 +89,17 @@ public final class ApiSpecs implements RequestSpecification {
                 .build();
     }
 
+    /**
+     * Auth request spec via cookies
+     */
+    public static RequestSpecification authRequestSpecCookie(String baseUrl, String token) {
+        return new RequestSpecBuilder()
+                .addRequestSpecification(baseRequestSpec(baseUrl))
+                .addCookie("token", token)
+                .addHeader("Content-Type", "application/json")
+                .build();
+    }
+
 
     /**
      * Base spec for success response (2xx).

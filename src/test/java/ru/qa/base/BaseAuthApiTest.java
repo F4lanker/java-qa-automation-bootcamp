@@ -35,14 +35,4 @@ public abstract class BaseAuthApiTest {
         authSpec = ApiSpecs.authRequestSpec(REQRES_URL ,accessToken).header("X-API-Key", API_KEY_CONFIG.apiKey());
     }
 
-    static void authenticate (ApiSpecs spec, String fields, String username, String password) {
-        accessToken = given()
-                .spec(spec)
-                .header("Content-Type", "application-json")
-                .body(Map.of(fields, username, "password", password))
-                .when()
-                .post(AuthConfig.RESFULL_BOOKER_AUTH)
-        .then()
-                .extract().jsonPath().getString("token");
-    }
 }
