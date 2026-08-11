@@ -1,4 +1,4 @@
-package ru.qa.provider;
+package ru.qa.base;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.restassured.http.ContentType;
@@ -32,7 +32,7 @@ public class AuthProviderRestfullBooker {
                 .post(AuthConfig.RESFULL_BOOKER_AUTH)
                 .then()
                 .log().all()
-                .extract().cookie("token");
+                .extract().jsonPath().getString("token");
 
         Assertions.assertNotNull(accessToken); //check the token exists
 
