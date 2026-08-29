@@ -5,9 +5,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.qa.days.day1.NumberClassifier;
 
-import static ru.qa.config.constansts.Message.Number.*;
-import static ru.qa.config.constansts.Message.Validation.INVALID;
-import static ru.qa.config.constansts.Message.Validation.NULL_VALUE;
+import static ru.qa.config.constants.Message.Number.*;
+import static ru.qa.config.constants.Message.Validation.INVALID;
+import static ru.qa.config.constants.Message.Validation.NULL_VALUE;
 
 public class NumberClassifierTest {
 

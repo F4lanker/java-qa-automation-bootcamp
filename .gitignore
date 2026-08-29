@@ -21,6 +21,7 @@ target/
 # Secrets & Config
 # ======================
 src/test/resources/apikey.properties
+src/test/resources/pass.properties
 src/test/resources/*.properties
 
 # ======================

@@ -1,8 +1,8 @@
 package ru.qa.days.day1;
 
-import static ru.qa.config.constansts.Message.Number.*;
-import static ru.qa.config.constansts.Message.Validation.INVALID;
-import static ru.qa.config.constansts.Message.Validation.NULL_VALUE;
+import static ru.qa.config.constants.Message.Number.*;
+import static ru.qa.config.constants.Message.Validation.INVALID;
+import static ru.qa.config.constants.Message.Validation.NULL_VALUE;
 
 public class NumberClassifier {
     public static String classify(Object input) {

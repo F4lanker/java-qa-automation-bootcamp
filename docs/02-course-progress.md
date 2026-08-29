@@ -155,7 +155,7 @@ ru.qa.base.BaseEndToEndTest     — Template Method Pattern
 
 # Java QA Automation Bootcamp — Прогресс
 
-> Последнее обновление: июнь 2026
+> Последнее обновление: август 2026
 > Автор: @F4lanker
 
 ---
@@ -177,7 +177,7 @@ ru.qa.base.BaseEndToEndTest     — Template Method Pattern
 | **2. ООП углубление (дни 14-18)** | ✅ Завершён |
 | **3. RestAssured Basic (дни 10-13)** | ✅ Завершён |
 | **4. RestAssured Advanced (дни 18-22)** | ✅ Завершён |
-| **5. RestAssured Auth & Workflow (дни 23-35)** | 🔄 В процессе (день 28 завершён) |
+| **5. RestAssured Auth & Workflow (дни 23-35)** | 🔄 В процессе (день 30 завершён) |
 | **6. UI Testing (Selenium/Selenide)** | ⏳ |
 | **7. CI/CD** | ⏳ |
 
@@ -191,41 +191,52 @@ ru.qa.base.BaseEndToEndTest     — Template Method Pattern
 - [x] День 26: JSON Schema Validation — `SchemaValidatorUtil`, contract testing
 - [x] День 27: Filters & Custom Logging — `CustomRequestLoggingFilter`, `TimingFilter`, DI
 - [x] День 28: Allure Reports — `@Epic/@Feature/@Story`, `@Step`, `@Attachment`, `AllureRestAssured`
+- [x] День 29: Data-Driven тесты — `@CsvFileSource`, `@MethodSource`, `@JsonSource` (кастомный `ArgumentsProvider`), Schema Validation интеграция
+- [x] День 30: WireMock — `WireMockExt` (JUnit5 `@RegisterExtension`), happy path / error path / delay-timeout сценарии, переиспользование `TimingFilter` на моке
 
-**Следующий день: 29 — Data-Driven тесты (CSV, JSON файлы)**
+**Следующий день: 31 — старт мини-проекта (полное покрытие Swagger API, дни 31-35)**
 
 ---
 
-## 🏗️ Архитектура проекта (актуально на день 28)
+## 🏗️ Архитектура проекта (актуально на день 30)
 
 ### Ключевые классы (src/main):
 ```
-ru.qa.config.constansts.ApiConfig     — BASE_URL, HTTPBIN_URL, REQRES_URL
-ru.qa.config.constansts.ApiKeyConfig  — Owner-интерфейс для API ключей
-ru.qa.config.constansts.AuthConfig    — учётные данные для авторизации
-ru.qa.specs.ApiSpecs                  — baseRequestSpec(), authRequestSpec()...
+ru.qa.config.constants.ApiConfig     — BASE_URL, HTTPBIN_URL, REQRES_URL
+ru.qa.config.constants.ApiKeyConfig  — Owner-интерфейс для API ключей
+ru.qa.config.constants.AuthConfig    — учётные данные для авторизации
+ru.qa.specs.ApiSpecs                  — baseRequestSpec(), baseRequestSpec(String baseUri), authRequestSpec()...
                                          + AllureRestAssured фильтр встроен в baseRequestSpec
 ru.qa.filter.CustomRequestLoggingFilter — DI через PrintStream, гибкое логирование
-ru.qa.filter.TimingFilter              — порог времени ответа, AssertionError при превышении
+ru.qa.filter.TimingFilter              — порог времени ответа, AssertionError при превышении;
+                                         переиспользован на дне 30 для WireMock delay-тестов
 ru.qa.util.SchemaValidatorUtil         — checkSchemaJson(), checkSavedJsonSchema()
+ru.qa.days.util.JsonUtils              — ObjectMapper-обёртка, toJson()/fromJson()
 ru.qa.dto.*                            — PostDto, UserDto, LoginDto, CreatePostRequest...
+ru.qa.testData.UserTestCase            — DTO для happy-path параметризации (день 30)
+ru.qa.testData.UserErrorTestCase       — DTO для error-path параметризации (день 30)
 ```
 
 ### Ключевые классы (src/test):
 ```
-ru.qa.base.BaseTest             — abstract, @BeforeEach common setup
-ru.qa.base.BaseApiTest          — extends BaseTest, requestSpec/responseSpec
-ru.qa.base.BaseAuthApiTest      — @BeforeAll токен, ApiKeyConfig static final
-listener.RetryListener          — TestExecutionExceptionHandler, retry + failedTests.txt
+ru.qa.base.BaseTest              — abstract, @BeforeEach common setup
+ru.qa.base.BaseApiTest           — extends BaseTest, requestSpec/responseSpec
+ru.qa.base.BaseAuthApiTest       — @BeforeAll токен, ApiKeyConfig static final
+ru.qa.base.WireMockExt           — abstract, @RegisterExtension WireMockExtension (день 30)
+listener.RetryListener           — TestExecutionExceptionHandler, retry + failedTests.txt
+ru.qa.provider.JsonFileArgumentsProvider — кастомный @JsonSource (день 29)
 ```
 
 ### Принятые архитектурные решения:
 - `ApiSpecs` — `final class` + `private constructor`, методы через **static imports**
 - `AllureRestAssured` фильтр встроен прямо в `baseRequestSpec()` — все запросы автоматически логируются
-- DI через конструктор — паттерн для всех кастомных Filter-классов (`PrintStream output`)
+- DI через конструктор — паттерн для всех кастомных Filter-классов (`PrintStream output`, `TimingFilter(thresholdMs)`)
 - `SchemaValidatorUtil` универсален — принимает либо path+spec, либо готовый response body
 - `RetryListener` — кастомный JUnit5 extension, retry до 3 раз + запись упавших в файл
 - Workflow/stateful тесты — без наследования от `BaseApiTest` (свобода endpoints)
+- **WireMock-тесты наследуются от `WireMockExt`** — не через static import, потому что `@RegisterExtension` регистрируется JUnit5 только через иерархию класса
+- Happy-path и error-path тесты разделены по DTO/JSON-файлам (`UserTestCase` vs `UserErrorTestCase`) — разные контракты ответа не должны проверяться одним и тем же ассертом
+- Заглушки (`stubFor`) живут внутри тестового класса рядом с использующим их тестом — не в отдельном пакете; логически это часть Given-шага теста
 
 ---
 
@@ -237,6 +248,7 @@ listener.RetryListener          — TestExecutionExceptionHandler, retry + faile
 - ООП принципы и паттерны объясняются **попутно** на примерах кода студента
 - Используются уже написанные утилиты (не дублируются)
 - Теория даётся ДО задания — отдельным блоком, с примерами и best practices
+- **С дня 30**: при знакомстве с новым инструментом — по умолчанию предлагать разбивку на этапы и совместное прохождение документации, если тема физически новая (не переиспользование уже знакомых концептов)
 
 ### Allure аннотации — стандарт (с дня 28):
 ```java
@@ -253,19 +265,22 @@ void testMethod() { ... }
 ### Best practices (накопленные):
 - `public final class + private constructor` для утилит
 - `@Override` всегда при переопределении
-- Static imports для `ApiSpecs`, `Assertions`, `Matchers`
+- Static imports для `ApiSpecs`, `Assertions`, `Matchers` — но точечно там, где есть риск коллизии имён (см. инсайты дня 30)
 - Given-When-Then порядок в RestAssured
 - `Files.createDirectories()` — идемпотентно, безопасно для повторных запусков
 - `ClassLoader.getSystemResource(...).toURI()` — для путей к тестовым ресурсам (не `.getFile()`)
 - DI через конструктор для классов которым нужна внешняя зависимость (PrintStream и др.)
 - Параметризация только когда структура теста одинакова — не используется когда ожидаемое поведение разное (pass vs exception)
 - `allure-results/` нужно чистить перед прогоном (`./gradlew clean test`) — иначе старые тесты остаются в отчёте после переноса между классами
+- Сериализация тестовых данных в JSON — только через `ObjectMapper`/`JsonUtils`, никогда через `Map.toString()` (день 30)
+- Тайминг-тесты на малых порогах (десятки мс) без прогрева JVM/connection pool — источник flaky-тестов; масштаб порогов должен доминировать над инфраструктурным шумом
 
 ### Известные ограничения тестовых API:
 - jsonplaceholder — fake API, POST не сохраняет данные
 - httpbin.org — для Basic Auth и cookies/sessions
 - reqres.in — для Bearer Token, требует `X-API-Key` header
 - reqres.in не валидирует Bearer токен строго — тест должен включать header даже если API не форсирует проверку
+- WireMock (localhost, день 30) — сервер живёт только на время класса (`@RegisterExtension` static → `BeforeAllCallback`/`AfterAllCallback`), стабы сбрасываются между тестами по умолчанию
 
 ---
 
@@ -275,6 +290,10 @@ void testMethod() { ... }
 - [ ] Решить — нужен ли `loggingRequestSpec()` теперь когда есть `AllureRestAssured` в base spec
 - [ ] Добавить `clean` задачу в `build.gradle` для автоочистки `allure-results/`
 - [ ] Рассмотреть вынос `@Epic`/`@Feature` на уровень класса (не дублировать в каждом методе)
+- [ ] WireMock Scenarios/States — не пройдено, вернуться при необходимости многошаговых сценариев ("первый вызов успех, второй — ошибка")
+- [ ] `.withBodyFile(...)` вместо inline JSON в стабах — когда данных станет больше
+- [ ] WireMock Plugin в IntelliJ — установлен, использование отложено до появления большего числа стабов
+- [ ] Reflection / Generics / ExtensionContext (долг с дня 29) — по-прежнему открыт, план: после дня 35
 
 ---
 
@@ -286,7 +305,20 @@ void testMethod() { ... }
 4. **Files.createDirectories — идемпотентен**, createDirectory (без s) — бросает исключение при повторном вызове
 5. **Dependency Injection** — разделение объявления зависимости (поле без значения) и её создания (передача через конструктор снаружи)
 6. **DI ≠ Overloading** — Overloading про количество вариантов метода (compile-time), DI про то кто создаёт зависимость (архитектура)
-7. **flush() vs close()** — flush выталкивает буфer, оставляя поток открытым; close = flush + освобождение ресурса
+7. **flush() vs close()** — flush выталкивает буфер, оставляя поток открытым; close = flush + освобождение ресурса
 8. **try-with-resources** — гарантирует close() даже при исключении внутри блока
 9. **Allure Behaviors view** — Epic→Feature→Story даёт осмысленную группировку вместо алфавитной по пакетам
 10. **allure-results накопительна** — не очищается автоматически, при переносе тестов между классами старые результаты остаются и дублируются в отчёте
+
+## 💡 Ключевые инсайты с дня 30 (WireMock)
+
+1. **`@RegisterExtension` регистрируется только через иерархию класса** — static import поля `wm` компилируется, но JUnit5 находит extension только через `extends`; без наследования сервер физически не поднимается
+2. **Похожие имена классов — не только методов** — `WireMock` (DSL) и `WireMockExt` (свой класс) достаточно похожи, чтобы обмануть автодополнение IDE при `extends`; при коллизиях помогает Cmd+клик — проверить откуда реально резолвится тип
+3. **В Java нет локальных методов** — только локальные переменные и локальные классы; попытка объявить метод внутри метода — синтаксическая ошибка независимо от аннотаций
+4. **Разные fluent-DSL нельзя склеивать точкой** — `wm.stubFor(...)` (WireMock) и `given()...when()...then()` (RestAssured) — независимые операторы с разными типами возврата, а не одна цепочка
+5. **`Map.toString()` — не JSON** — `{key=value}` (дефолтный Object.toString) синтаксически невалиден как JSON (`{"key":"value"}`); для сериализации нужен `ObjectMapper`
+6. **WireMock 404 "no stub mappings" ≠ "stub не совпал"** — первое означает, что на сервере вообще нет зарегистрированных стабов (проблема регистрации/лайфцикла), второе — что запрос не подошёл ни под один критерий (проблема matcher'а); тексты сообщений разные и точно указывают, что искать
+7. **`TimingFilter` меряет весь HTTP-цикл, а не только искусственный delay** — TCP-хендшейк, холодный старт JVM/connection pool добавляют overhead поверх `withFixedDelay`; на малых порогах (~50мс) это доминирует и ломает тест
+8. **`@ParameterizedTest(name=...)` плейсхолдеры `{0}`, `{1}`** — индексы параметров МЕТОДА, не полей объекта; для одного параметра-DTO валиден только `{0}`, который равен `toString()` этого объекта целиком
+9. **AssertionError — unchecked** — не требует `throws` в сигнатуре метода, в отличие от `JsonProcessingException` (checked)
+10. **`throws` наверх vs `@SneakyThrows`** — в тестовом коде предпочтителен явный `throws`: тестовый метод не является частью публичного API, которое нужно "защищать" от checked-исключений; `@SneakyThrows` уместнее в production-коде, где исключение практически недостижимо, но мешает сигнатуре интерфейса
