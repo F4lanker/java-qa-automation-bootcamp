@@ -32,15 +32,19 @@
 
 ## Authentication
 
-`POST /auth` with `{ "username": "...", "password": "..." }` returns `{ "token": "..." }`.
+`POST /auth` with `{ "username": "...", "password": "..." }` returns `{ "token": "..." }` **in the JSON response body**. The server does not set a `Set-Cookie` header on this call — there is no cookie to extract from the `/auth` response itself.
 
-For `PUT`/`PATCH`/`DELETE`, the token must be attached — official docs list **two** alternatives:
-- `Cookie: token=<token>`
+For `PUT`/`PATCH`/`DELETE`, the token must be attached to the *outgoing* request — official docs list **two** alternatives, and this is where "Cookie" enters the picture, as something the client builds, not something the server issues:
+- `Cookie: token=<token>` — token value taken from the `/auth` body and attached manually to subsequent requests
 - `Authorization: Basic <base64(admin:password123)>`
 
 **Not confirmed by us yet, reported by another tester (kat-kan, public repo):** the `Authorization: Basic` path returned `403 Forbidden` in their runs — only the `Cookie` header worked reliably. Docs and reality may disagree here. Verify both ourselves in Task 2 before picking one as the default in `authSpec`; don't assume the docs are accurate just because they list two options.
 
 This is a structurally different transport than reqres.in's auth (`X-API-Key` header + Bearer-style token). Not just different field names (`username` vs `email`) — a different mechanism for attaching the token to the request. Relevant for the auth-abstraction architecture decision (see Day 31 chat notes).
+
+**Confirmed default demo credentials:** `admin` / `password123` (published in the official docs — not a real secret, safe to reference here).
+
+**Confirmed quirk — invalid credentials on `POST /auth` return `HTTP 200`, not `401`.** Body is `{ "reason": "Bad credentials" }`. Source: independent tester write-up (Angie Jones, "Think Like a Tester" blog), matches the general "loose validation" pattern already seen elsewhere in this API. Consequence: a negative auth test that only checks the status code will pass vacuously — assert the response body/reason, not just the status code.
 
 ## Data behavior
 - Pre-loaded with 10 records by default.

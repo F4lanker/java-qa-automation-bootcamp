@@ -45,7 +45,7 @@ public final class ApiSpecs {
         return baseRequestSpec(REQRES_URL);
     }
 
-    public static RequestSpecification rstflBookerReqSpec() {
+    public static RequestSpecification restfulBookRequestSpec() {
         return baseRequestSpec(RESTFULBKR_URL);
     }
 

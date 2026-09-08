@@ -27,7 +27,7 @@ public class SmokeApiRestfulBookerTest {
     @Severity(SeverityLevel.CRITICAL)
     void pingSuccessResponse() {
         given()
-                .spec(rstflBookerReqSpec())
+                .spec(restfulBookRequestSpec())
                 .filter(new TimingFilter(RESPONSE_TIMEOUT))
                 .when()
                 .get("/ping")
