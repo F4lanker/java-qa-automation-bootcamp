@@ -10,6 +10,10 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 import static ru.qa.specs.ApiSpecs.*;
 
+/**
+ * Raw class provides API for auth tests
+ * included negative scenarios and else
+ */
 public class RestfulBookerAuthApi {
     private RestfulBookerAuthApi() {
         throw new AssertionError("Utility class");

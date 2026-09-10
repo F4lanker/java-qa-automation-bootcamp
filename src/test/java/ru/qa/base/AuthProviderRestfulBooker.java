@@ -4,7 +4,7 @@ import io.restassured.specification.RequestSpecification;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import ru.qa.config.constants.RestfulBookerCredsConfig;
+import ru.qa.util.RestfulBookerCredsConfig;
 import ru.qa.specs.ApiSpecs;
 import ru.qa.util.RestfulBookerAuthApi;
 
@@ -15,9 +15,6 @@ public class AuthProviderRestfulBooker {
     protected static String accessToken;
     protected static RequestSpecification authSpec;
 
-     RestfulBookerCredsConfig rstCfg = ConfigFactory.create(RestfulBookerCredsConfig.class);
-    String userName = rstCfg.rstBookerName();
-    String password = rstCfg.rstBookerPass();
 
     @BeforeAll
     static void authenticate() {
