@@ -14,7 +14,7 @@
 
 ## Cleanup / tech debt (non-blocking, carried forward)
 - [ ] Remove `implements RequestSpecification` from `ApiSpecs` (unnecessary, ~150 dead stub methods)
-- [ ] Fix `AuthConfig.RESFTFUL_BOOKER_AUTH` — inconsistent spelling, unify to `RESTFUL_BOOKER_AUTH` (or whatever the agreed canonical spelling ends up being) across the project
+- [ ] Fix `AuthConfig.RESTFUL_BOOKER_AUTH` — inconsistent spelling, unify to `RESTFUL_BOOKER_AUTH` (or whatever the agreed canonical spelling ends up being) across the project
 - [ ] Fix `pass.properties`/`pass.example` comments: `//` → `#`
 - [ ] Optional: `Assertions.assertNotNull(response)` in `RestfulBookerAuthApi.authResponseRestulBooker()` is close to a vacuous assertion (RestAssured's `Response` object is effectively never null after `.extract().response()`) — consider dropping it, it doesn't test anything meaningful
 
