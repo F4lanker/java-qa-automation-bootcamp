@@ -10,19 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Bookingdates{
+public class BookingdatesRequest {
 
 	@JsonProperty("checkin")
 	private String checkin;
 
 	@JsonProperty("checkout")
 	private String checkout;
-
-	public String getCheckin(){
-		return checkin;
-	}
-
-	public String getCheckout(){
-		return checkout;
-	}
 }

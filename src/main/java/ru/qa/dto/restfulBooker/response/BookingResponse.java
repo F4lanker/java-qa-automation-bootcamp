@@ -1,17 +1,11 @@
 package ru.qa.dto.restfulBooker.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 
-public class BookingIdResponse {
+public class BookingResponse {
 
 	@JsonProperty("booking")
 	private BookingDetailsResponse booking;
@@ -19,11 +13,4 @@ public class BookingIdResponse {
 	@JsonProperty("bookingid")
 	private int bookingid;
 
-	public BookingDetailsResponse getBooking(){
-		return booking;
-	}
-
-	public int getBookingid(){
-		return bookingid;
-	}
 }

@@ -1,8 +1,10 @@
 package ru.qa.dto.restfulBooker.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
-public class Bookingdates{
+@Data
+public class BookingdatesResponse {
 
 	@JsonProperty("checkin")
 	private String checkin;
@@ -10,11 +12,4 @@ public class Bookingdates{
 	@JsonProperty("checkout")
 	private String checkout;
 
-	public String getCheckin(){
-		return checkin;
-	}
-
-	public String getCheckout(){
-		return checkout;
-	}
 }

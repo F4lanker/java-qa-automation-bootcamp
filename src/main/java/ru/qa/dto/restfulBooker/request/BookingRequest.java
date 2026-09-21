@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BookingDetailsRequest {
+public class BookingRequest {
 
 	@JsonProperty("firstname")
 	private String firstname;
@@ -19,7 +19,7 @@ public class BookingDetailsRequest {
 	private String additionalneeds;
 
 	@JsonProperty("bookingdates")
-	private BookingdatesRequest bookingdatesRequest;
+	private BookingdatesRequest bookingdates;
 
 	@JsonProperty("totalprice")
 	private int totalprice;

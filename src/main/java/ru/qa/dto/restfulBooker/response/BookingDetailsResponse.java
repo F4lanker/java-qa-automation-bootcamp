@@ -1,8 +1,12 @@
 package ru.qa.dto.restfulBooker.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
-public class Booking{
+@Data
+
+
+public class BookingDetailsResponse {
 
 	@JsonProperty("firstname")
 	private String firstname;
@@ -11,7 +15,7 @@ public class Booking{
 	private String additionalneeds;
 
 	@JsonProperty("bookingdates")
-	private Bookingdates bookingdates;
+	private BookingdatesResponse bookingdates;
 
 	@JsonProperty("totalprice")
 	private int totalprice;
@@ -22,27 +26,4 @@ public class Booking{
 	@JsonProperty("lastname")
 	private String lastname;
 
-	public String getFirstname(){
-		return firstname;
-	}
-
-	public String getAdditionalneeds(){
-		return additionalneeds;
-	}
-
-	public Bookingdates getBookingdates(){
-		return bookingdates;
-	}
-
-	public int getTotalprice(){
-		return totalprice;
-	}
-
-	public boolean isDepositpaid(){
-		return depositpaid;
-	}
-
-	public String getLastname(){
-		return lastname;
-	}
 }
