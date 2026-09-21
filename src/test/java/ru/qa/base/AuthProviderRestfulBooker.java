@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import ru.qa.util.RestfulBookerCredsConfig;
 import ru.qa.specs.ApiSpecs;
-import ru.qa.util.RestfulBookerAuthApi;
+import ru.qa.api.restfulbooker.RestfulBookerAuthApi;
 
 import static ru.qa.config.constants.ApiConfig.RESTFULBKR_URL;
 

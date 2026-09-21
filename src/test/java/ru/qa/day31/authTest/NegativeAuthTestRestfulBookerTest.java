@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.equalTo;
-import static ru.qa.util.RestfulBookerAuthApi.authResponseRestulBooker;
+import static ru.qa.api.restfulbooker.RestfulBookerAuthApi.authResponseRestulBooker;
 
 public class NegativeAuthTestRestfulBookerTest {
 

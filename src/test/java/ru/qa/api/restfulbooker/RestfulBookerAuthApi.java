@@ -1,4 +1,4 @@
-package ru.qa.util;
+package ru.qa.api.restfulbooker;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
