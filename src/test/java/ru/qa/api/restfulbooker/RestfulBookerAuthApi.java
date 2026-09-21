@@ -25,7 +25,7 @@ public class RestfulBookerAuthApi {
                 .body(Map.of("username", userName, "password", password)).contentType(ContentType.JSON)
                 .log().all()
                 .when()
-                .post(AuthConfig.RESFTFUL_BOOKER_AUTH)
+                .post(AuthConfig.RESTFUL_BOOKER_AUTH)
                 .then()
                 .log().all()
                 .extract().response();
