@@ -10,11 +10,10 @@ import ru.qa.dto.restfulBooker.response.BookingResponse;
 import ru.qa.testdata.restfulbooker.BookingTestData;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class CreateBookingTest {
+public class PostCreateBookingTest {
 
     @Test
     @DisplayName("POST:/booking -valid")
@@ -22,7 +21,7 @@ public class CreateBookingTest {
     @Feature("Day 31  - Mini project API tests")
     @Story("Positive case filling all required fields")
     @Severity(SeverityLevel.CRITICAL)
-    void createBookingTest(){
+    void createBookingTest() {
 
         BookingRequest request = BookingTestData.valid().build();
         Response response = RestfulBookerBookingApi.bookingApi(request);
@@ -33,6 +32,7 @@ public class CreateBookingTest {
         assertNotNull(bookingResponse);
         assertTrue(bookingResponse.getBookingid() > 0, "Booking Id should be greater than 0");
         assertThat(bookingResponse.getBooking())
-                .usingRecursiveComparison().isEqualTo(request); //compare request and response ingoring class difference according to data inside
+                .usingRecursiveComparison()
+                .isEqualTo(request); //compare request and response ingoring class difference according to data inside
     }
 }
