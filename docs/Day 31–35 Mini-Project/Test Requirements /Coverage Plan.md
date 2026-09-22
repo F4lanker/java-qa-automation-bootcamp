@@ -12,16 +12,19 @@
 - [x] Raw HTTP call extracted to `RestfulBookerAuthApi` (utility, no `@BeforeAll` dependency) — negative tests don't `extend` the provider
 - [x] Credentials externalized via `RestfulBookerCredsConfig` (OWNER) reading `pass.properties`
 
-## Cleanup / tech debt (non-blocking, carried forward)
-- [ ] Remove `implements RequestSpecification` from `ApiSpecs` (unnecessary, ~150 dead stub methods)
-- [ ] Fix `AuthConfig.RESTFUL_BOOKER_AUTH` — inconsistent spelling, unify to `RESTFUL_BOOKER_AUTH` (or whatever the agreed canonical spelling ends up being) across the project
-- [ ] Fix `pass.properties`/`pass.example` comments: `//` → `#`
-- [ ] Optional: `Assertions.assertNotNull(response)` in `RestfulBookerAuthApi.authResponseRestulBooker()` is close to a vacuous assertion (RestAssured's `BookingResponse` object is effectively never null after `.extract().response()`) — consider dropping it, it doesn't test anything meaningful
+## Cleanup / tech debt — DONE
+- [x] Remove `implements RequestSpecification` from `ApiSpecs` (unnecessary, ~150 dead stub methods)
+- [x] Fix `AuthConfig.RESFTFUL_BOOKER_AUTH` — inconsistent spelling, unify to `RESTFUL_BOOKER_AUTH` (or whatever the agreed canonical spelling ends up being) across the project
+- [x] Fix `pass.properties`/`pass.example` comments: `//` → `#`
+- [x] Optional: `Assertions.assertNotNull(response)` in `RestfulBookerAuthApi.authResponseRestulBooker()` is close to a vacuous assertion (RestAssured's `Response` object is effectively never null after `.extract().response()`) — consider dropping it, it doesn't test anything meaningful
 
-## Task 3 — CRUD happy path (current)
-- [ ] `POST /booking` → 200, response contains generated `bookingid` + booking payload
-- [ ] `GET /booking/{id}` → matches created data
-- [ ] `PUT /booking/{id}` (with token) → full update reflected on a subsequent GET
+## Task 3 — CRUD happy path — DONE (with follow-ups)
+- [x] `POST /booking` → 200, response contains generated `bookingid` + booking payload (`PostCreateBookingTest`)
+- [x] `GET /booking/{id}` → matches created data (`GetReadBookingData`, cross-type recursive comparison against the request DTO)
+- [x] `PUT /booking/{id}` (with token) → full update reflected on the response (`PutUpdateBoking`, selectively extends `AuthProviderRestfulBooker`)
+- [ ] Follow-up: route `GET`/`PUT` raw calls through `RestfulBookerBookingApi` (currently only `POST` does — inline `given()` calls in `GetReadBookingData`/`PutUpdateBoking` break the "one utility per resource" convention)
+- [ ] Follow-up: remove the hardcoded `.statusCode(200)` from `RestfulBookerBookingApi.bookingApi()` — a raw call shouldn't assume the outcome, callers assert; currently blocks reusing it for a future negative-creation test
+- [ ] Follow-up: rename `bookingApi()` → `createBooking()` for symmetry with the upcoming `getBooking()`/`updateBooking()`
 
 ## Task 4 — Negative / error paths (not started, beyond auth negative case)
 - [ ] `GET /booking/{id}` with a non-existent id → 404
