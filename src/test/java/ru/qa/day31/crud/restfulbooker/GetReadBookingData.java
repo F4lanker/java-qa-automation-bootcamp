@@ -10,10 +10,7 @@ import ru.qa.dto.restfulBooker.response.BookingDetailsResponse;
 import ru.qa.dto.restfulBooker.response.BookingResponse;
 import ru.qa.testdata.restfulbooker.BookingTestData;
 
-import static io.restassured.RestAssured.given;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static ru.qa.specs.ApiSpecs.*;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 public class GetReadBookingData {
 
@@ -24,20 +21,17 @@ public class GetReadBookingData {
     @Story("requested booking data is equal with POST data")
     @Severity(SeverityLevel.CRITICAL)
     void getReadBookingData() {
+        //Build initial request for POST method
         BookingRequest initialRequest = BookingTestData.valid().build();
+
+        // Call POST method and get the response
         Response initialResponse = RestfulBookerBookingApi.createBooking(initialRequest);
         int bookingId = initialResponse.as(BookingResponse.class).getBookingid();
 
-        Response response = given()
-                .spec(restfulBookRequestSpec())
-                .when()
-                .get("/booking/" + bookingId)
-                .then()
-                .log().all()
-                .extract().response();
+        // Call GET method
+        Response response = RestfulBookerBookingApi.getBooking(initialRequest, bookingId);
         BookingDetailsResponse bookingDetailsResponse = response.as(BookingDetailsResponse.class);
 
-        assertNotNull(response);
         assertThat(bookingDetailsResponse).usingRecursiveComparison()
                                           .isEqualTo(initialRequest); // check the response data is equal to requested initially
     }

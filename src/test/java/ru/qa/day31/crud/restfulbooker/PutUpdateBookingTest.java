@@ -9,9 +9,7 @@ import ru.qa.dto.restfulBooker.response.BookingDetailsResponse;
 import ru.qa.dto.restfulBooker.response.BookingResponse;
 import ru.qa.testdata.restfulbooker.BookingTestData;
 
-import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.*;
-import static ru.qa.specs.ApiSpecs.*;
 
 public class PutUpdateBookingTest extends AuthProviderRestfulBooker {
     @Test
@@ -20,22 +18,14 @@ public class PutUpdateBookingTest extends AuthProviderRestfulBooker {
         BookingRequest request = BookingTestData.valid().build();
         BookingRequest updateUserRequest = BookingTestData.updated().build();
 
-        // 1. Create initial booking
+        // 1. Create initial booking, POST -  calling createBooking method
         Response response = RestfulBookerBookingApi.createBooking(request);
 
         // Get ID
         int bookingId = response.as(BookingResponse.class).getBookingid();
 
-        // 2. Update PUT request with auth Spec
-        Response updatedBookingResponse = given()
-                .spec(restfulBookRequestSpec())
-                .spec(authSpec) // auth swith inhereted method Auth spec
-                .body(updateUserRequest)
-                .when()
-                .put("/booking/" + bookingId)
-                .then()
-                .statusCode(200)
-                .extract().response();
+        // 2. Update PUT request with auth Spec calling updateBooking method
+        Response updatedBookingResponse = RestfulBookerBookingApi.updateBooking(updateUserRequest, authSpec, bookingId);
 
         // 3.  Map response after PUT updating to BookingDetailsResponse
         BookingDetailsResponse bookingResponse = updatedBookingResponse.as(BookingDetailsResponse.class);
