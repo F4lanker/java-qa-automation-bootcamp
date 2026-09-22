@@ -25,7 +25,7 @@ public class GetReadBookingData {
     @Severity(SeverityLevel.CRITICAL)
     void getReadBookingData() {
         BookingRequest initialRequest = BookingTestData.valid().build();
-        Response initialResponse = RestfulBookerBookingApi.bookingApi(initialRequest);
+        Response initialResponse = RestfulBookerBookingApi.createBooking(initialRequest);
         int bookingId = initialResponse.as(BookingResponse.class).getBookingid();
 
         Response response = given()

@@ -8,9 +8,9 @@ import static io.restassured.RestAssured.given;
 import static ru.qa.specs.ApiSpecs.*;
 
 public class RestfulBookerBookingApi {
-    private RestfulBookerBookingApi() {throw new AssertionError("Untility class");
+    private RestfulBookerBookingApi() {throw new AssertionError("Utility class");
     }
-    public static Response bookingApi(BookingRequest request) {
+    public static Response createBooking(BookingRequest request) {
 
 
 
@@ -22,7 +22,6 @@ public class RestfulBookerBookingApi {
                 .post("/booking")
                 .then()
                 .log().all()
-                .statusCode(200)
                 .extract().response();
     }
 }

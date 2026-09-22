@@ -13,7 +13,7 @@ import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.*;
 import static ru.qa.specs.ApiSpecs.*;
 
-public class PutUpdateBoking extends AuthProviderRestfulBooker {
+public class PutUpdateBookingTest extends AuthProviderRestfulBooker {
     @Test
     void updateBookingTest() {
 
@@ -21,7 +21,7 @@ public class PutUpdateBoking extends AuthProviderRestfulBooker {
         BookingRequest updateUserRequest = BookingTestData.updated().build();
 
         // 1. Create initial booking
-        Response response = RestfulBookerBookingApi.bookingApi(request);
+        Response response = RestfulBookerBookingApi.createBooking(request);
 
         // Get ID
         int bookingId = response.as(BookingResponse.class).getBookingid();

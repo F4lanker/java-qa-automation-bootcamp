@@ -24,7 +24,7 @@ public class PostCreateBookingTest {
     void createBookingTest() {
 
         BookingRequest request = BookingTestData.valid().build();
-        Response response = RestfulBookerBookingApi.bookingApi(request);
+        Response response = RestfulBookerBookingApi.createBooking(request);
 
         response.then().statusCode(200);
 
