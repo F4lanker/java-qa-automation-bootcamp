@@ -21,18 +21,18 @@ public class GetReadBookingData {
     @Story("requested booking data is equal with POST data")
     @Severity(SeverityLevel.CRITICAL)
     void getReadBookingData() {
-        //Build initial request for POST method
+        //Arrange: build initial request for POST method
         BookingRequest initialRequest = BookingTestData.valid().build();
-
-        // Call POST method and get the response
         Response initialResponse = RestfulBookerBookingApi.createBooking(initialRequest);
         int bookingId = initialResponse.as(BookingResponse.class).getBookingid();
 
-        // Call GET method
-        Response response = RestfulBookerBookingApi.getBooking(initialRequest, bookingId);
+        // Act:  Call GET method
+        Response response = RestfulBookerBookingApi.getBooking(bookingId);
         BookingDetailsResponse bookingDetailsResponse = response.as(BookingDetailsResponse.class);
 
+        //Assert: Checking initial request is equal GET responded
+        response.then().statusCode(200);
         assertThat(bookingDetailsResponse).usingRecursiveComparison()
-                                          .isEqualTo(initialRequest); // check the response data is equal to requested initially
+                                          .isEqualTo(initialRequest);
     }
 }
