@@ -1,0 +1,5 @@
+[
+  { "id": 14, "scenario": "Blocked user", "expectedStatus": 404, "error_message":  "User was blocked"},
+  {"id": 44, "scenario": "Deleted user", "expectedStatus": 404, "error_message":  "User was deleted"},
+  {"id": 4444, "scenario": "User is NOT exist", "expectedStatus": 404, "error_message":  "User is NOT exists"}
+]

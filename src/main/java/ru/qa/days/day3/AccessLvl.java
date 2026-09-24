@@ -1,6 +1,6 @@
 package ru.qa.days.day3;
 
-import ru.qa.config.constansts.UserRole;
+import ru.qa.config.constants.UserRole;
 
 public class AccessLvl {
     public static int getAccessLevel(UserRole role){

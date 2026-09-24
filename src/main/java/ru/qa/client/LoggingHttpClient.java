@@ -3,7 +3,7 @@ package ru.qa.client;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
-import static ru.qa.config.constansts.ApiConfig.BASE_URL;
+import static ru.qa.config.constants.ApiConfig.BASE_URL;
 
 /**
  * Http client with enhanced logging

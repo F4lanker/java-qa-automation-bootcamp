@@ -6,7 +6,7 @@ import io.restassured.specification.RequestSpecification;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
-import static ru.qa.config.constansts.ApiConfig.BASE_URL;
+import static ru.qa.config.constants.ApiConfig.BASE_URL;
 
 
 /**

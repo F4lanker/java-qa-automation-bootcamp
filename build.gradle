@@ -53,6 +53,9 @@ dependencies {
     testImplementation 'commons-io:commons-io:2.22.0'
     testRuntimeOnly 'ch.qos.logback:logback-classic:1.5.18'
 
+    //WireMock
+    testImplementation 'org.wiremock:wiremock:3.13.2'
+
     // Аннотации JetBrains (опционально)
     compileOnly 'org.jetbrains:annotations:24.1.0'
 }

@@ -6,7 +6,7 @@ import ru.qa.base.BaseApiTest;
 import ru.qa.builder.ApiRequestBuilder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static ru.qa.config.constansts.ApiConfig.BASE_URL;
+import static ru.qa.config.constants.ApiConfig.BASE_URL;
 
 public class BuilderPatternTest extends BaseApiTest {
     @Test

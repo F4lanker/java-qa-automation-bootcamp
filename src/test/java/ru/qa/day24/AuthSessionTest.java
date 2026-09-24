@@ -3,7 +3,7 @@ package ru.qa.day24;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.qa.config.constansts.ApiKeyConfig;
+import ru.qa.config.constants.ApiKeyConfig;
 import ru.qa.dto.LoginDto;
 
 import static io.restassured.RestAssured.given;
