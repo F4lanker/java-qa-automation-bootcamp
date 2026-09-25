@@ -33,10 +33,11 @@ public class RestfulBookerBookingApi {
                 .when()
                 .put("/booking/" + bookingId)
                 .then()
+                .log().all()
                 .extract().response();
     }
 
-    public static Response getBooking(BookingRequest request, int bookingId) {
+    public static Response getBooking( int bookingId) {
 
         return given()
                 .spec(restfulBookRequestSpec())
