@@ -22,9 +22,9 @@
 - [x] `POST /booking` → 200, response contains generated `bookingid` + booking payload (`PostCreateBookingTest`)
 - [x] `GET /booking/{id}` → matches created data (`GetReadBookingDataTest`, cross-type recursive comparison against the request DTO)
 - [x] `PUT /booking/{id}` (with token) → full update reflected on the response (`PutUpdateBoking`, selectively extends `AuthProviderRestfulBooker`)
-- [ ] Follow-up: route `GET`/`PUT` raw calls through `RestfulBookerBookingApi` (currently only `POST` does — inline `given()` calls in `GetReadBookingDataTest`/`PutUpdateBoking` break the "one utility per resource" convention)
-- [ ] Follow-up: remove the hardcoded `.statusCode(200)` from `RestfulBookerBookingApi.bookingApi()` — a raw call shouldn't assume the outcome, callers assert; currently blocks reusing it for a future negative-creation test
-- [ ] Follow-up: rename `bookingApi()` → `createBooking()` for symmetry with the upcoming `getBooking()`/`updateBooking()`
+- [x] Follow-up: route `GET`/`PUT` raw calls through `RestfulBookerBookingApi` (currently only `POST` does — inline `given()` calls in `GetReadBookingDataTest`/`PutUpdateBoking` break the "one utility per resource" convention)
+- [x] Follow-up: remove the hardcoded `.statusCode(200)` from `RestfulBookerBookingApi.bookingApi()` — a raw call shouldn't assume the outcome, callers assert; currently blocks reusing it for a future negative-creation test
+- [x] Follow-up: rename `bookingApi()` → `createBooking()` for symmetry with the upcoming `getBooking()`/`updateBooking()`
 
 ## Task 4 — Negative / error paths (not started, beyond auth negative case)
 - [ ] `GET /booking/{id}` with a non-existent id → 404
