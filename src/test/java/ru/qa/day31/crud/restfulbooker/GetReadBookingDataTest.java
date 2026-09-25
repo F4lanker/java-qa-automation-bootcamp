@@ -12,7 +12,7 @@ import ru.qa.testdata.restfulbooker.BookingTestData;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class GetReadBookingData {
+public class GetReadBookingDataTest {
 
     @Test
     @DisplayName("GET:/booking +[id]")
