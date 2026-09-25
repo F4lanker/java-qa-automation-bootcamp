@@ -20,9 +20,9 @@
 
 ## Task 3 — CRUD happy path — DONE (with follow-ups)
 - [x] `POST /booking` → 200, response contains generated `bookingid` + booking payload (`PostCreateBookingTest`)
-- [x] `GET /booking/{id}` → matches created data (`GetReadBookingData`, cross-type recursive comparison against the request DTO)
+- [x] `GET /booking/{id}` → matches created data (`GetReadBookingDataTest`, cross-type recursive comparison against the request DTO)
 - [x] `PUT /booking/{id}` (with token) → full update reflected on the response (`PutUpdateBoking`, selectively extends `AuthProviderRestfulBooker`)
-- [ ] Follow-up: route `GET`/`PUT` raw calls through `RestfulBookerBookingApi` (currently only `POST` does — inline `given()` calls in `GetReadBookingData`/`PutUpdateBoking` break the "one utility per resource" convention)
+- [ ] Follow-up: route `GET`/`PUT` raw calls through `RestfulBookerBookingApi` (currently only `POST` does — inline `given()` calls in `GetReadBookingDataTest`/`PutUpdateBoking` break the "one utility per resource" convention)
 - [ ] Follow-up: remove the hardcoded `.statusCode(200)` from `RestfulBookerBookingApi.bookingApi()` — a raw call shouldn't assume the outcome, callers assert; currently blocks reusing it for a future negative-creation test
 - [ ] Follow-up: rename `bookingApi()` → `createBooking()` for symmetry with the upcoming `getBooking()`/`updateBooking()`
 
