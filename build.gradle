@@ -64,6 +64,11 @@ dependencies {
 }
 
 test {
+
+    doFirst {
+        delete 'allure-results'
+    }
+
     useJUnitPlatform()
     testLogging {
         events "passed", "skipped", "failed"
